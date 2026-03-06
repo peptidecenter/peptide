@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PeptideCenter | מדריך הפפטידים המקצועי</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=3" />
+</head>
+<body>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Navbar -->
+<nav>
+  <a href="#" class="logo">Peptide<span>Center</span></a>
+  <ul class="nav-links">
+    <li><a href="#peptides">פפטידים</a></li>
+    <li><a href="wiki/index.html">ויקי</a></li>
+    <li><a href="#about">אודות</a></li>
+    <li><a href="#contact" class="nav-cta">יצירת קשר</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>
+    המדריך השלם<br/>
+    ל<span class="highlight">פפטידים</span> המתקדמים
+  </h1>
+  <p>
+    מידע מדעי מקיף על פפטידים מובילים — מנגנון פעולה, מינונים, יתרונות ותופעות לוואי.
+    ייעוץ מקצועי אישי דרך ווטסאפ וטלגרם.
+  </p>
+  <div class="hero-btns">
+    <a href="#peptides" class="btn btn-primary">📋 לכל הפפטידים</a>
+    <a href="https://wa.me/972500000000?text=שלום%2C%20אני%20מעוניין%20בייעוץ%20על%20פפטידים" target="_blank" class="btn btn-whatsapp">💬 ייעוץ בוואטסאפ</a>
+    <a href="https://t.me/YourTelegramUsername" target="_blank" class="btn btn-telegram">✈️ ייעוץ בטלגרם</a>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">9+</div><div class="stat-label">פפטידים מתועדים</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">מידע מבוסס מחקר</div></div>
+  <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">ייעוץ זמין</div></div>
+</div>
+
+<!-- Features / About Section -->
+<section id="about">
+  <div class="section-title">
+    <h2>במה פפטידים עוזרים לי?</h2>
+    <p>בחר\י את הסיבה עבורך</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🩹</div>
+      <h3>שיקום רקמות והתאוששות</h3>
+      <p>פפטיד התומך בתהליכי ריפוי טבעיים של שרירים, גידים ורצועות. מסייע בהפחתת דלקות והתאוששות מהירה לאחר מאמץ.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧬</div>
+      <h3>התחדשות תאים ושיקום פציעות</h3>
+      <p>מסייע בשיקום שרירים ורקמות פגועות, תומך ביצירת כלי דם חדשים, ואידיאלי לעוסקים בפעילות גופנית אינטנסיבית.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>ייצור אנרגיה ותפקוד מטבולי</h3>
+      <p>קו-אנזים חיוני התומך בייצור האנרגיה בתאים, בתיקון DNA, ובשמירה על בריאות תאית ורמות חיוניות גבוהות.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✨</div>
+      <h3>בריאות העור וצמיחת שיער</h3>
+      <p>פפטיד נחושת התומך בייצור קולגן, גמישות העור, תיקון רקמות, ונחקר בהקשר של עידוד צמיחת שיער.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧠</div>
+      <h3>איזון עצבי ותפקוד קוגניטיבי</h3>
+      <p>פפטיד נוירוביולוגי המסייע בשיפור ריכוז, בהירות מחשבתית, איזון מצב הרוח והתמודדות עם לחץ ועומס מנטלי.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚛️</div>
+      <h3>תפקוד מיטוכונדריאלי</h3>
+      <p>מתמקד בתחנות הכוח של התא לשיפור יעילות ייצור האנרגיה, הפחתת עקה חמצונית ותמיכה בהתאוששות תאית.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Peptides Section -->
+<section id="peptides" style="padding-top: 1rem;">
+  <div class="section-title">
+    <h2>מדריך הפפטידים</h2>
+    <p>לחץ על כל כרטיס לפרטים מלאים כולל מינונים, יתרונות ותופעות לוואי</p>
+  </div>
+
+  <div class="peptide-grid" id="peptideGrid"></div>
+</section>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+  <div class="disclaimer-icon">⚠️</div>
+  <p>
+    <strong>הצהרת אחריות רפואית:</strong> המידע באתר זה מיועד למטרות <strong>אינפורמטיביות בלבד</strong>
+    ואינו מהווה ייעוץ רפואי. רוב הפפטידים המוצגים אינם מאושרים לשימוש קליני בישראל.
+    יש להתייעץ עם רופא לפני כל שימוש. השימוש בתכשירים אלו הוא באחריות המשתמש בלבד.
+  </p>
+</div>
+
+<!-- Contact Section -->
+<section id="contact" style="padding-top: 2rem;">
+  <div class="contact-section">
+    <div>✨</div>
+    <h2>מוכן להתחיל?</h2>
+    <p>
+      צור קשר עם הצוות המקצועי שלנו לייעוץ אישי, בחירת הפרוטוקול המתאים לך,
+      ומידע על הזמנה. אנחנו זמינים בוואטסאפ ובטלגרם.
+    </p>
+    <div class="contact-btns">
+      <a href="https://wa.me/972500000000?text=שלום%2C%20אני%20מעוניין%20בייעוץ%20על%20פפטידים" target="_blank" class="btn btn-whatsapp btn-lg">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        ייעוץ בוואטסאפ
+      </a>
+      <a href="https://t.me/YourTelegramUsername" target="_blank" class="btn btn-telegram btn-lg">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        ייעוץ בטלגרם
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>© 2025 PeptideCenter · כל הזכויות שמורות · <a href="#contact">צור קשר</a></p>
+  <p style="margin-top:0.5rem; font-size:0.75rem;">אתר זה מיועד למטרות מידע בלבד. אין לראות בתכנים תחליף לייעוץ רפואי מקצועי.</p>
+</footer>
+
+<script src="js/peptides-data.js"></script>
+<script>
+// ─── Render Peptide Cards (Link-based) ───
+function renderCards() {
+  const grid = document.getElementById('peptideGrid');
+  peptides.forEach(p => {
+    const card = document.createElement('a');
+    card.className = 'peptide-card card-link';
+    card.href = `peptides/${p.id}.html`;
+    card.innerHTML = `
+      <div class="card-header">
+        <div class="card-icon" style="background:${p.iconBg}">${p.icon}</div>
+        <div class="card-title-block">
+          <h3>${p.name}</h3>
+          <div class="sub">${p.fullName}</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p>${p.summary}</p>
+        <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        <div class="card-link-btn">📖 למידע נוסף ←</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ─── Generate Particles ───
+function generateParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left: ${Math.random() * 100}%;
+      width: ${Math.random() * 3 + 1}px;
+      height: ${Math.random() * 3 + 1}px;
+      animation-duration: ${Math.random() * 15 + 10}s;
+      animation-delay: ${Math.random() * 15}s;
+      background: ${Math.random() > 0.5 ? 'var(--accent)' : 'var(--accent3)'};
+    `;
+    container.appendChild(p);
+  }
+}
+
+renderCards();
+generateParticles();
+</script>
+</body>
+</html>

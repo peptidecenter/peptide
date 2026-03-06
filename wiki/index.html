@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מאגר הפפטידים | PeptideCenter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/styles.css?v=3" />
+</head>
+<body>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Navbar -->
+<nav>
+  <a href="../index.html" class="logo">Peptide<span>Center</span></a>
+  <ul class="nav-links">
+    <li><a href="../index.html#peptides">פפטידים</a></li>
+    <li><a href="index.html" style="color: var(--accent);">ויקי</a></li>
+    <li><a href="../index.html#about">אודות</a></li>
+    <li><a href="../index.html#contact" class="nav-cta">יצירת קשר</a></li>
+  </ul>
+</nav>
+
+<!-- Filter Overlay -->
+<div class="filter-overlay" id="filterOverlay" onclick="closeFilter()"></div>
+
+<!-- Filter Panel -->
+<div class="filter-panel" id="filterPanel">
+  <div class="filter-panel-header">
+    <h2>סינון קטגוריות</h2>
+    <button class="filter-close" onclick="closeFilter()">✕</button>
+  </div>
+  <button class="filter-all" onclick="clearFilters()">כל הפפטידים</button>
+  <div class="filter-group">
+    <div class="filter-group-title">סטטוס מחקר</div>
+    <div id="statusFilters"></div>
+  </div>
+  <div class="filter-group">
+    <div class="filter-group-title">תגיות</div>
+    <div id="tagFilters"></div>
+  </div>
+</div>
+
+<!-- Wiki Content -->
+<div class="wiki-page">
+  <div class="wiki-header">
+    <h1>מאגר הפפטידים</h1>
+    <p style="color:var(--text-muted);font-size:1.2rem;margin-bottom:1.5rem;">חפש, סנן ומצא את הפפטיד המתאים לך</p>
+  </div>
+
+  <div class="wiki-controls">
+    <input type="text" class="search-bar" id="searchInput" placeholder="🔍 חפש פפטידים (BPC-157, Selank, וכו'...)" oninput="filterPeptides()" />
+    <button class="filter-toggle" onclick="openFilter()">🔽 סנן קטגוריות</button>
+  </div>
+
+  <div class="results-info">
+    <span id="resultsCount">מציג 9 פפטידים</span>
+    <select class="sort-select" id="sortSelect" onchange="filterPeptides()">
+      <option value="az">שם (א-ת)</option>
+      <option value="za">שם (ת-א)</option>
+    </select>
+  </div>
+
+  <div class="peptide-grid" id="wikiGrid"></div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>© 2025 PeptideCenter · כל הזכויות שמורות · <a href="../index.html#contact">צור קשר</a></p>
+</footer>
+
+<script src="../js/peptides-data.js"></script>
+<script>
+// ─── State ───
+let activeStatusFilters = [];
+let activeTagFilters = [];
+
+// ─── Render Cards ───
+function renderWikiCards(list) {
+  const grid = document.getElementById('wikiGrid');
+  grid.innerHTML = '';
+  list.forEach(p => {
+    const card = document.createElement('a');
+    card.className = 'wiki-card';
+    card.href = `../peptides/${p.id}.html`;
+    card.innerHTML = `
+      <div class="wiki-card-header">
+        <div class="wiki-card-icon" style="background:${p.iconBg}">${p.icon}</div>
+        <div>
+          <div class="wiki-card-title">${p.name}</div>
+          <div class="wiki-card-subtitle">${p.fullName}</div>
+        </div>
+      </div>
+      <div class="wiki-card-tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      <div class="wiki-card-summary">${p.summary}</div>
+      <div class="wiki-card-footer">
+        <span class="wiki-card-link">למידע נוסף ←</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  document.getElementById('resultsCount').textContent = `מציג ${list.length} פפטידים`;
+}
+
+// ─── Filter Logic ───
+function filterPeptides() {
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  const sort = document.getElementById('sortSelect').value;
+
+  let filtered = peptides.filter(p => {
+    // Search filter
+    const matchSearch = !query ||
+      p.name.toLowerCase().includes(query) ||
+      p.fullName.toLowerCase().includes(query) ||
+      p.summary.includes(query) ||
+      p.tags.some(t => t.includes(query));
+
+    // Status filter
+    const matchStatus = activeStatusFilters.length === 0 ||
+      activeStatusFilters.includes(p.badgeText);
+
+    // Tag filter
+    const matchTag = activeTagFilters.length === 0 ||
+      p.tags.some(t => activeTagFilters.includes(t));
+
+    return matchSearch && matchStatus && matchTag;
+  });
+
+  // Sort
+  if (sort === 'az') filtered.sort((a, b) => a.name.localeCompare(b.name));
+  else if (sort === 'za') filtered.sort((a, b) => b.name.localeCompare(a.name));
+
+  renderWikiCards(filtered);
+}
+
+// ─── Build Filters ───
+function buildFilters() {
+  // Status filters
+  const statuses = {};
+  peptides.forEach(p => {
+    statuses[p.badgeText] = (statuses[p.badgeText] || 0) + 1;
+  });
+  const statusContainer = document.getElementById('statusFilters');
+  Object.entries(statuses).forEach(([status, count]) => {
+    const div = document.createElement('div');
+    div.className = 'filter-option';
+    div.innerHTML = `<span>${status}</span><span class="count">${count}</span>`;
+    div.onclick = () => toggleStatusFilter(status, div);
+    statusContainer.appendChild(div);
+  });
+
+  // Tag filters
+  const tags = {};
+  peptides.forEach(p => p.tags.forEach(t => {
+    tags[t] = (tags[t] || 0) + 1;
+  }));
+  const tagContainer = document.getElementById('tagFilters');
+  Object.entries(tags).sort((a, b) => b[1] - a[1]).forEach(([tag, count]) => {
+    const div = document.createElement('div');
+    div.className = 'filter-option';
+    div.innerHTML = `<span>${tag}</span><span class="count">${count}</span>`;
+    div.onclick = () => toggleTagFilter(tag, div);
+    tagContainer.appendChild(div);
+  });
+}
+
+function toggleStatusFilter(status, el) {
+  const idx = activeStatusFilters.indexOf(status);
+  if (idx >= 0) {
+    activeStatusFilters.splice(idx, 1);
+    el.classList.remove('active');
+  } else {
+    activeStatusFilters.push(status);
+    el.classList.add('active');
+  }
+  filterPeptides();
+}
+
+function toggleTagFilter(tag, el) {
+  const idx = activeTagFilters.indexOf(tag);
+  if (idx >= 0) {
+    activeTagFilters.splice(idx, 1);
+    el.classList.remove('active');
+  } else {
+    activeTagFilters.push(tag);
+    el.classList.add('active');
+  }
+  filterPeptides();
+}
+
+function clearFilters() {
+  activeStatusFilters = [];
+  activeTagFilters = [];
+  document.querySelectorAll('.filter-option').forEach(el => el.classList.remove('active'));
+  document.getElementById('searchInput').value = '';
+  filterPeptides();
+}
+
+function openFilter() {
+  document.getElementById('filterPanel').classList.add('open');
+  document.getElementById('filterOverlay').classList.add('open');
+}
+function closeFilter() {
+  document.getElementById('filterPanel').classList.remove('open');
+  document.getElementById('filterOverlay').classList.remove('open');
+}
+
+// ─── Particles ───
+function generateParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left: ${Math.random() * 100}%;
+      width: ${Math.random() * 3 + 1}px;
+      height: ${Math.random() * 3 + 1}px;
+      animation-duration: ${Math.random() * 15 + 10}s;
+      animation-delay: ${Math.random() * 15}s;
+      background: ${Math.random() > 0.5 ? 'var(--accent)' : 'var(--accent3)'};
+    `;
+    container.appendChild(p);
+  }
+}
+
+// ─── Init ───
+buildFilters();
+renderWikiCards(peptides);
+generateParticles();
+</script>
+</body>
+</html>
