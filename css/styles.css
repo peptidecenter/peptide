@@ -519,7 +519,7 @@ footer a { color: var(--accent); text-decoration: none; }
   z-index: 1;
 }
 .detail-main { display: flex; flex-direction: column; gap: 1.5rem; }
-.detail-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+.detail-sidebar { display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: 5rem; align-self: start; }
 
 .info-card {
   background: var(--surface);
@@ -596,8 +596,6 @@ footer a { color: var(--accent); text-decoration: none; }
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 1.5rem;
-  position: sticky;
-  top: 5rem;
 }
 .quick-guide h3 {
   font-size: 1.15rem;
