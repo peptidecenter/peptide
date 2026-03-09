@@ -90,7 +90,7 @@ section { position: relative; z-index: 1; padding: 5rem 2rem; max-width: 1200px;
 
 /* Features Grid */
 .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-.feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; text-align: right; transition: all 0.3s; position: relative; overflow: hidden; }
+.feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; text-align: right; transition: all 0.3s; position: relative; overflow: hidden; text-decoration: none; color: inherit; display: block; }
 .feature-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,198,255,0.04), transparent); opacity: 0; transition: opacity 0.3s; }
 .feature-card:hover { transform: translateY(-4px); border-color: rgba(0,198,255,0.35); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
 .feature-card:hover::before { opacity: 1; }
