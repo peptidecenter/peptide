@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מחשבון מינון פפטידים | PeptideCenter</title>
+  <meta name="description" content="מחשבון מינון פפטידים — חשבו את כמות הנוזל הנדרשת לשאיבה במזרק אינסולין לאחר מהילת פפטידים עם מים בקטריוסטטיים." />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/styles.css?v=4" />
+</head>
+<body>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Navbar -->
+<nav>
+  <a href="../index.html" class="logo">Peptide<span>Center</span></a>
+  <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="תפריט">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="../index.html#peptides">פפטידים</a></li>
+    <li><a href="../wiki/index.html">ויקי</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-dropdown-toggle">מדריכים ▾</a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="../guide/index.html">המדריך המלא</a></li>
+        <li><a href="../reconstitution/index.html">מדריך מהילה</a></li>
+        <li><a href="../calculator/index.html">מחשבון מינון</a></li>
+        <li><a href="../goals/index.html">מדריכים לפי מטרה</a></li>
+      </ul>
+    </li>
+    <li><a href="../safety/index.html">בטיחות</a></li>
+    <li><a href="../index.html#contact" class="nav-cta">יצירת קשר</a></li>
+  </ul>
+</nav>
+
+<!-- Content -->
+<div class="content-page">
+
+  <h1>מחשבון מינון פפטידים</h1>
+  <p class="page-subtitle">כלי חישוב פשוט ומדויק שעוזר לכם לחשב את כמות הנוזל שצריך לשאוב במזרק אינסולין לאחר מהילת פפטידים עם מים בקטריוסטטיים. הזינו את נתוני הבקבוקון, כמות המים והמינון הרצוי — והמחשבון יעשה את השאר.</p>
+
+  <!-- Calculator -->
+  <div class="info-card">
+    <div class="info-card-title">
+      <div class="icon">🧮</div>
+      מחשבון מינון
+    </div>
+
+    <div class="calc-form">
+      <div class="calc-input-group">
+        <label for="vialSize">גודל הבקבוקון (מ"ג)</label>
+        <input type="number" id="vialSize" placeholder="לדוגמה: 5, 10, 15" min="0" step="any" />
+      </div>
+      <div class="calc-input-group">
+        <label for="waterAmount">כמות מים בקטריוסטטיים (מ"ל)</label>
+        <input type="number" id="waterAmount" placeholder="לדוגמה: 1, 2, 3" min="0" step="any" />
+      </div>
+      <div class="calc-input-group">
+        <label for="desiredDose">מינון רצוי (מק"ג)</label>
+        <input type="number" id="desiredDose" placeholder="לדוגמה: 250, 500, 1000" min="0" step="any" />
+      </div>
+      <button class="btn btn-primary calc-btn" onclick="calculate()">חשב מינון</button>
+    </div>
+
+    <div id="calcResult" class="calc-result" style="display:none;"></div>
+  </div>
+
+  <!-- Example -->
+  <div class="info-card">
+    <div class="info-card-title">
+      <div class="icon" style="background:rgba(0,255,170,0.1);">📋</div>
+      דוגמה לחישוב
+    </div>
+    <p>נניח שיש לנו בקבוקון של <strong>10 מ"ג</strong> פפטיד, הוספנו <strong>2 מ"ל</strong> מים בקטריוסטטיים, ואנחנו רוצים מינון של <strong>500 מק"ג</strong> (מיקרוגרם).</p>
+    <p><strong>שלב 1 — חישוב ריכוז:</strong> 10 מ"ג = 10,000 מק"ג. מחלקים ב-2 מ"ל, ומקבלים ריכוז של 5,000 מק"ג לכל מ"ל.</p>
+    <p><strong>שלב 2 — חישוב כמות לשאיבה:</strong> 500 מק"ג חלקי 5,000 מק"ג/מ"ל = 0.1 מ"ל.</p>
+    <p><strong>שלב 3 — המרה ליחידות אינסולין:</strong> 0.1 מ"ל כפול 100 = <strong>10 IU</strong> (יחידות) במזרק אינסולין.</p>
+    <p style="margin-top:1rem;">לכן, עבור מינון של 500 מק"ג, צריך לשאוב <strong style="color:var(--accent);">0.1 מ"ל</strong> — שזה <strong style="color:var(--accent);">10 סימוני יחידות</strong> במזרק אינסולין סטנדרטי (100 IU/מ"ל).</p>
+  </div>
+
+  <!-- Explanation -->
+  <div class="info-card">
+    <div class="info-card-title">
+      <div class="icon" style="background:rgba(123,94,167,0.15);">📐</div>
+      איך עובד החישוב
+    </div>
+    <p>חישוב מינון פפטידים מבוסס על נוסחה פשוטה של ריכוז ונפח. הנה ההסבר המלא:</p>
+
+    <h3>שלב 1: חישוב ריכוז התמיסה</h3>
+    <p>כשמוסיפים מים בקטריוסטטיים לבקבוקון פפטיד, יוצרים תמיסה בריכוז מסוים. הריכוז מחושב כך:</p>
+    <p style="text-align:center; direction:ltr; font-family:'Space Mono', monospace; color:var(--accent); font-size:1.15rem; background:var(--surface2); padding:1rem; border-radius:12px; border:1px solid var(--border);">
+      (גודל בקבוקון מ"ג × 1,000) ÷ כמות מים מ"ל = ריכוז (מק"ג/מ"ל)
+    </p>
+    <p>ההכפלה ב-1,000 ממירה מיליגרם (מ"ג) למיקרוגרם (מק"ג), כי מינון פפטידים נמדד בדרך כלל במיקרוגרם.</p>
+
+    <h3>שלב 2: חישוב כמות הנוזל לשאיבה</h3>
+    <p>לאחר שידוע הריכוז, מחשבים כמה מ"ל צריך לשאוב במזרק כדי לקבל את המינון הרצוי:</p>
+    <p style="text-align:center; direction:ltr; font-family:'Space Mono', monospace; color:var(--accent); font-size:1.15rem; background:var(--surface2); padding:1rem; border-radius:12px; border:1px solid var(--border);">
+      מינון רצוי (מק"ג) ÷ ריכוז (מק"ג/מ"ל) = כמות לשאיבה (מ"ל)
+    </p>
+
+    <h3>שלב 3: המרה ליחידות אינסולין</h3>
+    <p>מזרקי אינסולין סטנדרטיים מדורגים ב-100 יחידות (IU) לכל 1 מ"ל. לכן ההמרה פשוטה:</p>
+    <p style="text-align:center; direction:ltr; font-family:'Space Mono', monospace; color:var(--accent); font-size:1.15rem; background:var(--surface2); padding:1rem; border-radius:12px; border:1px solid var(--border);">
+      כמות לשאיבה (מ"ל) × 100 = יחידות (IU) במזרק אינסולין
+    </p>
+    <p>לדוגמה, אם צריך לשאוב 0.05 מ"ל, זה שווה ל-5 IU — כלומר 5 סימונים קטנים במזרק אינסולין.</p>
+  </div>
+
+  <!-- Tips -->
+  <div class="info-card">
+    <div class="info-card-title">
+      <div class="icon" style="background:rgba(0,198,255,0.1);">💡</div>
+      טיפים חשובים
+    </div>
+    <ul class="tips-list">
+      <li><span class="tip-icon">✓</span> השתמשו תמיד במים בקטריוסטטיים (Bacteriostatic Water) ולא במים סטריליים רגילים — המים הבקטריוסטטיים מכילים חומר משמר שמונע חיידקים.</li>
+      <li><span class="tip-icon">✓</span> הוסיפו את המים לאט לאורך דופן הבקבוקון — אל תזריקו ישירות על האבקה כדי לא לפגוע במבנה הפפטיד.</li>
+      <li><span class="tip-icon">✓</span> סובבו את הבקבוקון בעדינות עד להמסה מלאה — אל תנערו בחוזקה.</li>
+      <li><span class="tip-icon">✓</span> לאחר המהילה אחסנו במקרר (2-8 מעלות) והשתמשו תוך 3-4 שבועות.</li>
+      <li><span class="tip-icon">✓</span> רשמו על הבקבוקון את תאריך המהילה ואת הריכוז שנוצר.</li>
+      <li><span class="tip-icon">✓</span> בדקו תמיד פעמיים את החישוב לפני ההזרקה — טעות קטנה בריכוז יכולה לגרום להבדל משמעותי במינון.</li>
+    </ul>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <div class="disclaimer-icon">⚠️</div>
+    <p>
+      <strong>הצהרת אחריות:</strong> מחשבון זה מיועד למטרות <strong>אינפורמטיביות וחינוכיות בלבד</strong>.
+      התוצאות הן חישוב מתמטי בלבד ואינן מהוות המלצה רפואית או הנחיה לשימוש.
+      יש להתייעץ עם רופא או בעל מקצוע רפואי מוסמך לפני כל שימוש בפפטידים.
+      האחריות על השימוש במחשבון ובתוצאותיו חלה על המשתמש בלבד.
+    </p>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-links">
+    <a href="../guide/index.html">מדריך למתחילים</a>
+    <a href="../calculator/index.html">מחשבון מינון</a>
+    <a href="../safety/index.html">בטיחות</a>
+    <a href="../accessibility/index.html">נגישות</a>
+  </div>
+  <p>&copy; 2025 PeptideCenter &middot; כל הזכויות שמורות &middot; <a href="../index.html#contact">צור קשר</a></p>
+  <p style="margin-top:0.5rem; font-size:0.75rem;">אתר זה מיועד למטרות מידע בלבד. אין לראות בתכנים תחליף לייעוץ רפואי מקצועי.</p>
+</footer>
+
+<script src="../js/widgets.js"></script>
+<script>
+function calculate() {
+  var vial = parseFloat(document.getElementById('vialSize').value);
+  var water = parseFloat(document.getElementById('waterAmount').value);
+  var dose = parseFloat(document.getElementById('desiredDose').value);
+  if (!vial || !water || !dose || vial <= 0 || water <= 0 || dose <= 0) {
+    alert('אנא מלא את כל השדות');
+    return;
+  }
+  var concentration = (vial * 1000) / water;
+  var mlToDraw = dose / concentration;
+  var iu = mlToDraw * 100;
+  var resultDiv = document.getElementById('calcResult');
+  resultDiv.style.display = 'grid';
+  resultDiv.innerHTML =
+    '<div class="calc-result-item"><div class="calc-result-label">ריכוז לאחר מהילה</div><div class="calc-result-value">' + concentration.toFixed(0) + ' מק"ג/מ"ל</div></div>' +
+    '<div class="calc-result-item"><div class="calc-result-label">כמות לשאיבה</div><div class="calc-result-value">' + mlToDraw.toFixed(3) + ' מ"ל</div></div>' +
+    '<div class="calc-result-item"><div class="calc-result-label">יחידות במזרק אינסולין</div><div class="calc-result-value">' + iu.toFixed(1) + ' IU</div></div>';
+}
+</script>
+</body>
+</html>

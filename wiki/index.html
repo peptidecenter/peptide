@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>מאגר הפפטידים | PeptideCenter</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/styles.css?v=3" />
+  <link rel="stylesheet" href="../css/styles.css?v=4" />
 </head>
 <body>
 
@@ -15,10 +15,22 @@
 <!-- Navbar -->
 <nav>
   <a href="../index.html" class="logo">Peptide<span>Center</span></a>
-  <ul class="nav-links">
+  <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="תפריט">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="../index.html#peptides">פפטידים</a></li>
     <li><a href="index.html" style="color: var(--accent);">ויקי</a></li>
-    <li><a href="../index.html#about">אודות</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-dropdown-toggle">מדריכים ▾</a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="../guide/index.html">המדריך המלא</a></li>
+        <li><a href="../reconstitution/index.html">מדריך מהילה</a></li>
+        <li><a href="../calculator/index.html">מחשבון מינון</a></li>
+        <li><a href="../goals/index.html">מדריכים לפי מטרה</a></li>
+      </ul>
+    </li>
+    <li><a href="../safety/index.html">בטיחות</a></li>
     <li><a href="../index.html#contact" class="nav-cta">יצירת קשר</a></li>
   </ul>
 </nav>
@@ -68,7 +80,14 @@
 
 <!-- Footer -->
 <footer>
+  <div class="footer-links">
+    <a href="../guide/index.html">מדריך למתחילים</a>
+    <a href="../calculator/index.html">מחשבון מינון</a>
+    <a href="../safety/index.html">בטיחות</a>
+    <a href="../accessibility/index.html">נגישות</a>
+  </div>
   <p>© 2025 PeptideCenter · כל הזכויות שמורות · <a href="../index.html#contact">צור קשר</a></p>
+  <p style="margin-top:0.5rem; font-size:0.75rem;">אתר זה מיועד למטרות מידע בלבד. אין לראות בתכנים תחליף לייעוץ רפואי מקצועי.</p>
 </footer>
 
 <script src="../js/peptides-data.js"></script>
@@ -207,28 +226,10 @@ function closeFilter() {
   document.getElementById('filterOverlay').classList.remove('open');
 }
 
-// ─── Particles ───
-function generateParticles() {
-  const container = document.getElementById('particles');
-  for (let i = 0; i < 30; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.cssText = `
-      left: ${Math.random() * 100}%;
-      width: ${Math.random() * 3 + 1}px;
-      height: ${Math.random() * 3 + 1}px;
-      animation-duration: ${Math.random() * 15 + 10}s;
-      animation-delay: ${Math.random() * 15}s;
-      background: ${Math.random() > 0.5 ? 'var(--accent)' : 'var(--accent3)'};
-    `;
-    container.appendChild(p);
-  }
-}
-
 // ─── Init ───
 buildFilters();
 renderWikiCards(peptides);
-generateParticles();
 </script>
+<script src="../js/widgets.js"></script>
 </body>
 </html>
