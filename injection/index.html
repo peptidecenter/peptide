@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מדריך הזרקה תת-עורית | PeptideCenter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/styles.css?v=5" />
+</head>
+<body>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Navbar -->
+<nav>
+  <a href="../index.html" class="logo">Peptide<span>Center</span></a>
+  <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="תפריט">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="../index.html#peptides">פפטידים</a></li>
+    <li><a href="../wiki/index.html">ויקי</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-dropdown-toggle">מדריכים ▾</a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="../guide/index.html">המדריך המלא</a></li>
+        <li><a href="../reconstitution/index.html">מדריך מהילה</a></li>
+        <li><a href="index.html" style="color: var(--accent);">מדריך הזרקה</a></li>
+        <li><a href="../calculator/index.html">מחשבון מינון</a></li>
+        <li><a href="../goals/index.html">מדריכים לפי מטרה</a></li>
+        <li><a href="../quiz/index.html">מצא את הפפטיד שלך</a></li>
+        <li><a href="../injection/index.html">מדריך הזרקה</a></li>
+      </ul>
+    </li>
+    <li><a href="../safety/index.html">בטיחות</a></li>
+    <li><a href="../index.html#contact" class="nav-cta">יצירת קשר</a></li>
+  </ul>
+</nav>
+
+<!-- Content -->
+<div class="content-page">
+
+  <!-- Hero -->
+  <h1>מדריך הזרקה תת-עורית</h1>
+  <p class="page-subtitle">מדריך מפורט להזרקה בטוחה של פפטידים</p>
+
+  <!-- Section 1: What is subcutaneous injection -->
+  <h2>מהי הזרקה תת-עורית?</h2>
+
+  <p>הזרקה תת-עורית (Subcutaneous Injection) היא שיטת הזרקה שבה התמיסה מוזרקת לשכבת השומן שמתחת לעור. זוהי שיטת ההזרקה הנפוצה והמומלצת ביותר לפפטידים, הודות לספיגה איטית ויציבה לזרם הדם.</p>
+  <p>בניגוד להזרקה תוך-שרירית (Intramuscular), שמזריקה ישירות לתוך השריר ודורשת מחט ארוכה יותר, הזרקה תת-עורית משתמשת במחטים דקות וקצרות, גורמת לפחות כאב, ומתאימה במיוחד לשימוש עצמי בבית. רוב הפפטידים מיועדים לספיגה הדרגתית, ולכן הזרקה תת-עורית היא הדרך האופטימלית להעברתם לגוף.</p>
+
+  <!-- Section 2: Required Equipment -->
+  <h2>ציוד נדרש</h2>
+
+  <div class="info-card">
+    <ul class="tips-list">
+      <li><span class="tip-icon">💉</span> <strong>מזרקי אינסולין</strong> — מחטים בעובי 29-31 gauge, קצרות ודקות במיוחד למינימום כאב</li>
+      <li><span class="tip-icon">🧴</span> <strong>מגבוני אלכוהול</strong> — לחיטוי אתר ההזרקה וידיים</li>
+      <li><span class="tip-icon">🧪</span> <strong>הפפטיד המהול</strong> — תמיסה מוכנה לשימוש. טרם מהלתם? עיינו ב<a href="../reconstitution/index.html">מדריך המהילה</a></li>
+      <li><span class="tip-icon">🩹</span> <strong>פלסטר</strong> (אופציונלי) — לכיסוי אתר ההזרקה לאחר הפעולה</li>
+    </ul>
+  </div>
+
+  <!-- Section 3: Recommended Injection Sites -->
+  <h2>אתרי הזרקה מומלצים</h2>
+
+  <div class="step-card">
+    <div class="step-number">1</div>
+    <h3>בטן</h3>
+    <p>האזור הנפוץ ביותר להזרקה תת-עורית. הזריקו באזור של כ-2 אינץ' (5 ס"מ) מסביב לטבור, תוך הימנעות מהטבור עצמו. שכבת השומן באזור זה עבה יחסית, מה שמקל על ביצוע ההזרקה ומאפשר ספיגה טובה.</p>
+  </div>
+
+  <div class="step-card">
+    <div class="step-number">2</div>
+    <h3>ירך</h3>
+    <p>החלק הקדמי-החיצוני של הירך הוא אתר נוח במיוחד לשימוש עצמי. קל להגיע אליו, ושכבת השומן באזור זה מספקת ספיגה יציבה. מומלץ להזריק בשליש האמצעי של הירך.</p>
+  </div>
+
+  <div class="step-card">
+    <div class="step-number">3</div>
+    <h3>זרוע</h3>
+    <p>החלק האחורי-העליון של הזרוע הוא אתר הזרקה פחות שכיח, אך יכול לשמש כחלופה לסירוגין עם האתרים האחרים. ייתכן שתצטרכו עזרה מאדם נוסף להזרקה באזור זה.</p>
+  </div>
+
+  <!-- Section 4: Injection Steps -->
+  <h2>שלבי ההזרקה</h2>
+
+  <div class="step-card">
+    <div class="step-number">1</div>
+    <h3>רחצו ידיים ביסודיות</h3>
+    <p>שטפו את הידיים היטב עם מים וסבון למשך 20 שניות לפחות. ניגבו עם מגבת נקייה. שלב זה חיוני למניעת זיהומים.</p>
+  </div>
+
+  <div class="step-card">
+    <div class="step-number">2</div>
+    <h3>הכינו את המזרק</h3>
+    <p>חטאו את פקק הגומי של בקבוקון הפפטיד הממוהל במגבון אלכוהול. הכניסו את מחט המזרק דרך הפקק ומשכו את המינון הנכון בהתאם לפרוטוקול שלכם. ודאו שאין בועות אוויר במזרק — אם יש, הקישו עליו בעדינות ולחצו את הבועות החוצה.</p>
+  </div>
+
+  <div class="step-card">
+    <div class="step-number">3</div>
+    <h3>נקו את אתר ההזרקה</h3>
+    <p>נגבו את אזור ההזרקה הנבחר במגבון אלכוהול בתנועה מעגלית מהמרכז החוצה. המתינו מספר שניות עד שהאלכוהול מתייבש לפני שממשיכים.</p>
+  </div>
+
+  <div class="step-card">
+    <div class="step-number">4</div>
+    <h3>צבטו קפל עור</h3>
+    <p>באצבע האגודל והאצבע המורה, צבטו בעדינות קפל עור באזור ההזרקה. זה יוצר משטח מורם שמקל על החדרת המחט לשכבת השומן התת-עורית ומונע הזרקה לשריר.</p>
+  </div>
+
+  <div class="step-card">
+    <div class="step-number">5</div>
+    <h3>החדירו את המחט</h3>
+    <p>החדירו את המחט בזווית של 45-90 מעלות ביחס לעור, בתנועה מהירה וחדה. בדרך כלל, בשימוש במזרקי אינסולין קצרים, ניתן להחדיר בזווית של 90 מעלות. אם שכבת השומן דקה, השתמשו בזווית של 45 מעלות.</p>
+  </div>
+
+  <div class="step-card">
+    <div class="step-number">6</div>
+    <h3>הזריקו לאט ובעדינות</h3>
+    <p>לחצו על בוכנת המזרק באיטיות ובלחץ קבוע עד שכל התמיסה מוזרקת. הזרקה איטית מפחיתה אי-נוחות ומבטיחה ספיגה אחידה של הפפטיד.</p>
+  </div>
+
+  <div class="step-card">
+    <div class="step-number">7</div>
+    <h3>הוציאו את המחט והפעילו לחץ עדין</h3>
+    <p>הוציאו את המחט באותה זווית שבה הוחדרה. הפעילו לחץ עדין עם מגבון יבש או כדורית כותנה על אתר ההזרקה למשך מספר שניות. אין לשפשף את האזור. במידת הצורך, הדביקו פלסטר קטן.</p>
+  </div>
+
+  <!-- Section 5: Important Tips -->
+  <h2>טיפים חשובים</h2>
+
+  <div class="info-card">
+    <ul class="tips-list">
+      <li><span class="tip-icon">✓</span> סובבו את אתר ההזרקה בכל פעם — אל תזריקו באותו מקום פעמיים ברציפות כדי למנוע גירוי מקומי והצטלקות.</li>
+      <li><span class="tip-icon">✓</span> אחסנו מזרקים משומשים בקופסת שארפס (Sharps Container) ייעודית — לעולם אל תשליכו מחטים לפח הרגיל.</li>
+      <li><span class="tip-icon">✓</span> אל תשתמשו באותו מזרק פעמיים — כל מזרק מיועד לשימוש חד פעמי בלבד לשמירה על סטריליות.</li>
+      <li><span class="tip-icon">✓</span> הזריקו בטמפרטורת החדר — הוציאו את הבקבוקון מהמקרר כ-10 דקות לפני ההזרקה. הזרקת תמיסה קרה עלולה לגרום לאי-נוחות מוגברת.</li>
+      <li><span class="tip-icon">✓</span> אם מופיע דם קל באתר ההזרקה — זה תקין לחלוטין. לחצו בעדינות עם מגבון עד שהדימום נעצר.</li>
+    </ul>
+  </div>
+
+  <!-- Section 6: FAQ -->
+  <h2>שאלות נפוצות</h2>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">האם ההזרקה כואבת?</button>
+    <div class="faq-answer"><p>הכאב מינימלי מאוד בשימוש במזרקי אינסולין דקים (29-31 gauge). רוב האנשים מדווחים על תחושת צביטה קלה בלבד שנמשכת שנייה אחת. החדרת המחט בתנועה מהירה ושימוש בתמיסה בטמפרטורת החדר מפחיתים עוד יותר את האי-נוחות.</p></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">מתי הכי טוב להזריק?</button>
+    <div class="faq-answer"><p>הזמן המומלץ תלוי בסוג הפפטיד ובמטרת השימוש. חלק מהפפטידים מומלצים להזרקה בבוקר על קיבה ריקה, בעוד אחרים מתאימים יותר להזרקה בערב לפני השינה. עיינו בהוראות הספציפיות לכל פפטיד או התייעצו עם איש מקצוע.</p></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">מה לעשות אם יש אדמומיות באתר ההזרקה?</button>
+    <div class="faq-answer"><p>תגובה מקומית קלה כמו אדמומיות, נפיחות קטנה או גירוד באתר ההזרקה היא תקינה ושכיחה. היא נובעת מהתגובה הטבעית של הגוף ובדרך כלל חולפת תוך מספר שעות. אם האדמומיות נמשכת מעבר ל-24 שעות, מתפשטת, או מלווה בחום — פנו לרופא.</p></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">האם אפשר להזריק לבד?</button>
+    <div class="faq-answer"><p>כן, בהחלט. רוב האנשים מבצעים הזרקות תת-עוריות בעצמם ללא קושי. אתרי ההזרקה הנוחים ביותר לשימוש עצמי הם הבטן והירך. עם מעט תרגול, התהליך הופך לפשוט ומהיר. בהזרקות הראשונות, ייתכן שתרגישו מעט חוסר ביטחון — זה טבעי ויעבור.</p></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">כמה מהר הפפטיד נספג?</button>
+    <div class="faq-answer"><p>בהזרקה תת-עורית, הפפטיד נספג בדרך כלל תוך 15-30 דקות לזרם הדם. קצב הספיגה תלוי בסוג הפפטיד, באתר ההזרקה ובזרימת הדם באזור. הזרקה באזור הבטן נוטה לספיגה מהירה יותר בהשוואה לירך או לזרוע.</p></div>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <div class="disclaimer-icon">⚠️</div>
+    <p><strong>הבהרה חשובה:</strong> המידע באתר זה מיועד למטרות חינוכיות ומידע כללי בלבד. אין לראות בתכנים אלה תחליף לייעוץ רפואי מקצועי. לפני כל שימוש בפפטידים, מומלץ להתייעץ עם רופא או איש מקצוע מוסמך. PeptideCenter אינו אחראי לכל שימוש שנעשה על בסיס המידע המופיע באתר.</p>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-links">
+    <a href="../guide/index.html">מדריך למתחילים</a>
+    <a href="../calculator/index.html">מחשבון מינון</a>
+    <a href="../safety/index.html">בטיחות</a>
+    <a href="../accessibility/index.html">נגישות</a>
+    <a href="../quiz/index.html">מצא את הפפטיד שלך</a>
+    <a href="../injection/index.html">מדריך הזרקה</a>
+  </div>
+  <p>&copy; 2025 PeptideCenter &middot; כל הזכויות שמורות &middot; <a href="../index.html#contact">צור קשר</a></p>
+  <p style="margin-top:0.5rem; font-size:0.75rem;">אתר זה מיועד למטרות מידע בלבד. אין לראות בתכנים תחליף לייעוץ רפואי מקצועי.</p>
+</footer>
+
+<script src="../js/widgets.js?v=2"></script>
+</body>
+</html>

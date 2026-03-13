@@ -937,121 +937,52 @@ footer a { color: var(--accent); text-decoration: none; }
 .faq-item.open .faq-answer { display: block; }
 
 /* ===========================
-   Floating Contact Widget (FAB)
+   Floating Contact Widget
    =========================== */
-.contact-fab {
-  position: fixed;
-  bottom: 2rem;
-  left: 2rem;
-  z-index: 1000;
+/* Navbar icon buttons (WA, TG, Accessibility) */
+.nav-icons {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.8rem;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 0.5rem;
 }
-.fab-main-btn {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #25d366, #128c3e);
-  border: none;
-  font-size: 1.6rem;
-  cursor: pointer;
-  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-  transition: all 0.3s;
-  color: #fff;
+.nav-icon-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fab-pulse 2s infinite;
-  order: 2;
-}
-.fab-main-btn:hover { transform: scale(1.1); }
-@keyframes fab-pulse {
-  0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
-  50% { box-shadow: 0 4px 30px rgba(37,211,102,0.7); }
-}
-.fab-options {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  opacity: 0;
-  transform: translateY(10px);
-  pointer-events: none;
-  transition: all 0.3s;
-  order: 1;
-}
-.contact-fab.open .fab-options {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: all;
-}
-.contact-fab.open .fab-main-btn { animation: none; }
-.fab-option {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.7rem 1.2rem;
-  border-radius: 50px;
-  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.25s;
   text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 600;
-  white-space: nowrap;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  transition: transform 0.2s;
+  position: relative;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0.25rem;
 }
-.fab-option:hover { transform: scale(1.05); }
-.fab-wa { background: #25d366; }
-.fab-tg { background: #0088cc; }
-.fab-label {
-  position: absolute;
-  bottom: 70px;
-  left: 0;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
+.nav-icon-btn:hover { opacity: 0.7; }
+.nav-icon-btn.wa { color: #25d366; }
+.nav-icon-btn.tg { color: #0088cc; }
+.nav-icon-btn.a11y { color: var(--accent); }
+.nav-icon-btn svg { width: 20px; height: 20px; }
+.nav-icon-btn .a11y-icon-text { font-size: 1.2rem; line-height: 1; }
+@keyframes bubble-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-.contact-fab:hover .fab-label { opacity: 1; }
-.contact-fab.open .fab-label { display: none; }
 
 /* ===========================
    Accessibility Widget
    =========================== */
 .a11y-widget {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 1000;
+  position: relative;
 }
-.a11y-btn {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 2px solid var(--accent);
-  font-size: 1.4rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  color: var(--accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.a11y-btn:hover { background: rgba(0,198,255,0.1); transform: scale(1.1); }
-.a11y-btn:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+.a11y-btn { display: none; }
 .a11y-panel {
   display: none;
   position: absolute;
-  bottom: 60px;
-  right: 0;
+  top: calc(100% + 12px);
+  left: -1rem;
+  right: auto;
   width: 280px;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -1196,9 +1127,7 @@ body.a11y-readable-font, body.a11y-readable-font * { font-family: Arial, Helveti
   .goal-grid { grid-template-columns: 1fr; }
   .calc-result { grid-template-columns: 1fr; }
   .step-card { padding-right: 4rem; }
-  .contact-fab { bottom: 1.5rem; left: 1.5rem; }
-  .a11y-widget { bottom: 1.5rem; right: 1.5rem; }
-  .a11y-panel { width: 260px; right: -0.5rem; }
-  .fab-main-btn { width: 52px; height: 52px; font-size: 1.4rem; }
-  .a11y-btn { width: 44px; height: 44px; font-size: 1.2rem; }
+  .nav-icons { gap: 0.3rem; margin-right: 0; }
+  .nav-icon-btn svg { width: 18px; height: 18px; }
+  .a11y-panel { width: 260px; }
 }

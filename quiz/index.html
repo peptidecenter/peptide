@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>שאלון התאמת פפטידים | PeptideCenter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/styles.css?v=5" />
+  <style>
+    /* Quiz Container */
+    .quiz-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 8.5rem 1.5rem 3rem;
+      min-height: 100vh;
+    }
+
+    /* Progress Bar */
+    .quiz-progress {
+      width: 100%;
+      height: 6px;
+      background: var(--surface2);
+      border-radius: 3px;
+      margin-bottom: 2.5rem;
+      overflow: hidden;
+    }
+    .quiz-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+
+    /* Steps */
+    .quiz-step {
+      display: none;
+      animation: quizFadeIn 0.4s ease;
+    }
+    .quiz-step.active {
+      display: block;
+    }
+    @keyframes quizFadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .quiz-step h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 0.8rem;
+      text-align: center;
+    }
+    .quiz-step .quiz-desc {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      text-align: center;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .quiz-step h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Option Cards */
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.2rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      text-align: right;
+      position: relative;
+      backdrop-filter: blur(8px);
+    }
+    .quiz-option:hover {
+      border-color: rgba(0, 198, 255, 0.4);
+      background: rgba(13, 17, 23, 0.9);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+    .quiz-option:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .quiz-option.selected {
+      border-color: var(--accent);
+      background: rgba(0, 198, 255, 0.08);
+      box-shadow: 0 0 20px rgba(0, 198, 255, 0.1);
+    }
+    .quiz-option-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 198, 255, 0.08);
+      border: 1px solid rgba(0, 198, 255, 0.12);
+    }
+    .quiz-option-text {
+      flex: 1;
+    }
+    .quiz-option-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .quiz-option-sub {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* Buttons */
+    .quiz-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      justify-content: center;
+    }
+    .quiz-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2.2rem;
+      border-radius: 50px;
+      font-family: 'Rubik', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    .quiz-btn-primary {
+      background: linear-gradient(135deg, #0099cc, #006699);
+      color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 0 15px rgba(0, 198, 255, 0.15);
+    }
+    .quiz-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 198, 255, 0.3);
+    }
+    .quiz-btn-primary:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .quiz-btn-back {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .quiz-btn-back:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .quiz-btn-restart {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      margin-top: 1rem;
+    }
+    .quiz-btn-restart:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Result Cards */
+    .quiz-results-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .quiz-result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .quiz-result-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 198, 255, 0.35);
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.4);
+    }
+    .quiz-result-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .quiz-result-card p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 0.8rem;
+    }
+    .quiz-result-link {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* CTA Section */
+    .quiz-cta {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin-top: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .quiz-cta::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(0, 198, 255, 0.06), transparent 70%);
+      pointer-events: none;
+    }
+    .quiz-cta h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .quiz-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
+    }
+    .quiz-cta-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Disclaimer in quiz */
+    .quiz-disclaimer {
+      margin-top: 2rem;
+      background: rgba(255, 107, 107, 0.05);
+      border: 1px solid rgba(255, 107, 107, 0.2);
+      border-radius: 12px;
+      padding: 1.2rem;
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+    }
+    .quiz-disclaimer-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .quiz-disclaimer p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin: 0;
+      text-align: right;
+    }
+    .quiz-disclaimer strong {
+      color: var(--danger);
+    }
+
+    /* Intro icon */
+    .quiz-intro-icon {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    /* Experience level description */
+    .quiz-exp-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    @media (max-width: 768px) {
+      .quiz-wrapper {
+        padding: 6.5rem 1rem 2rem;
+      }
+      .quiz-step h1 {
+        font-size: 1.6rem;
+      }
+      .quiz-results-grid {
+        grid-template-columns: 1fr;
+      }
+      .quiz-cta {
+        padding: 2rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Navbar -->
+<nav>
+  <a href="../index.html" class="logo">Peptide<span>Center</span></a>
+  <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="תפריט">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="../index.html#peptides">פפטידים</a></li>
+    <li><a href="../wiki/index.html">ויקי</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-dropdown-toggle">מדריכים ▾</a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="../guide/index.html">המדריך המלא</a></li>
+        <li><a href="../reconstitution/index.html">מדריך מהילה</a></li>
+        <li><a href="../calculator/index.html">מחשבון מינון</a></li>
+        <li><a href="../goals/index.html">מדריכים לפי מטרה</a></li>
+        <li><a href="../quiz/index.html">מצא את הפפטיד שלך</a></li>
+        <li><a href="../injection/index.html">מדריך הזרקה</a></li>
+      </ul>
+    </li>
+    <li><a href="../safety/index.html">בטיחות</a></li>
+    <li><a href="../index.html#contact" class="nav-cta">יצירת קשר</a></li>
+  </ul>
+</nav>
+
+<!-- Quiz -->
+<div class="quiz-wrapper" role="main">
+
+  <!-- Progress Bar -->
+  <div class="quiz-progress" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" aria-label="התקדמות בשאלון">
+    <div class="quiz-progress-fill" id="progressFill" style="width: 25%"></div>
+  </div>
+
+  <!-- Step 1: Intro -->
+  <div class="quiz-step active" id="step1" role="region" aria-label="מבוא לשאלון">
+    <div class="quiz-intro-icon">🧬</div>
+    <h1>מצא את הפפטיד המתאים לך</h1>
+    <p class="quiz-desc">
+      ענה על מספר שאלות קצרות ונתאים לך את הפפטידים המתאימים ביותר למטרות שלך.
+      השאלון לוקח פחות מדקה ומבוסס על מידע מדעי עדכני.
+    </p>
+    <div class="quiz-actions">
+      <button class="quiz-btn quiz-btn-primary" onclick="goToStep(2)" aria-label="התחל את השאלון">התחל</button>
+    </div>
+  </div>
+
+  <!-- Step 2: Goal Selection -->
+  <div class="quiz-step" id="step2" role="region" aria-label="בחירת מטרה">
+    <h2>מה המטרה המרכזית שלך?</h2>
+    <div class="quiz-options" role="radiogroup" aria-label="בחר מטרה">
+      <button class="quiz-option" role="radio" aria-checked="false" tabindex="0" data-goal="weightloss" onclick="selectGoal(this)">
+        <div class="quiz-option-icon">🔥</div>
+        <div class="quiz-option-text">
+          <div class="quiz-option-title">הרזיה וירידה במשקל</div>
+        </div>
+      </button>
+      <button class="quiz-option" role="radio" aria-checked="false" tabindex="0" data-goal="recovery" onclick="selectGoal(this)">
+        <div class="quiz-option-icon">💪</div>
+        <div class="quiz-option-text">
+          <div class="quiz-option-title">התאוששות ושיקום</div>
+        </div>
+      </button>
+      <button class="quiz-option" role="radio" aria-checked="false" tabindex="0" data-goal="energy" onclick="selectGoal(this)">
+        <div class="quiz-option-icon">⚡</div>
+        <div class="quiz-option-text">
+          <div class="quiz-option-title">אנרגיה וביצועים</div>
+        </div>
+      </button>
+      <button class="quiz-option" role="radio" aria-checked="false" tabindex="0" data-goal="brain" onclick="selectGoal(this)">
+        <div class="quiz-option-icon">🧠</div>
+        <div class="quiz-option-text">
+          <div class="quiz-option-title">ריכוז ומוח</div>
+        </div>
+      </button>
+      <button class="quiz-option" role="radio" aria-checked="false" tabindex="0" data-goal="skin" onclick="selectGoal(this)">
+        <div class="quiz-option-icon">✨</div>
+        <div class="quiz-option-text">
+          <div class="quiz-option-title">עור ושיער</div>
+        </div>
+      </button>
+    </div>
+    <div class="quiz-actions">
+      <button class="quiz-btn quiz-btn-back" onclick="goToStep(1)" aria-label="חזרה">→ חזרה</button>
+      <button class="quiz-btn quiz-btn-primary" id="goalNext" onclick="goToStep(3)" disabled aria-label="המשך">המשך</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Experience Level -->
+  <div class="quiz-step" id="step3" role="region" aria-label="רמת ניסיון">
+    <h2>מה רמת ההיכרות שלך עם פפטידים?</h2>
+    <div class="quiz-options" role="radiogroup" aria-label="בחר רמת ניסיון">
+      <button class="quiz-option" role="radio" aria-checked="false" tabindex="0" data-exp="beginner" onclick="selectExp(this)">
+        <div class="quiz-option-icon">🌱</div>
+        <div class="quiz-option-text">
+          <div class="quiz-option-title">מתחיל</div>
+          <div class="quiz-option-sub">לא השתמשתי בפפטידים</div>
+        </div>
+      </button>
+      <button class="quiz-option" role="radio" aria-checked="false" tabindex="0" data-exp="intermediate" onclick="selectExp(this)">
+        <div class="quiz-option-icon">📊</div>
+        <div class="quiz-option-text">
+          <div class="quiz-option-title">בינוני</div>
+          <div class="quiz-option-sub">יש לי ניסיון מסוים</div>
+        </div>
+      </button>
+      <button class="quiz-option" role="radio" aria-checked="false" tabindex="0" data-exp="advanced" onclick="selectExp(this)">
+        <div class="quiz-option-icon">🎯</div>
+        <div class="quiz-option-text">
+          <div class="quiz-option-title">מתקדם</div>
+          <div class="quiz-option-sub">משתמש מנוסה</div>
+        </div>
+      </button>
+    </div>
+    <div class="quiz-actions">
+      <button class="quiz-btn quiz-btn-back" onclick="goToStep(2)" aria-label="חזרה">→ חזרה</button>
+      <button class="quiz-btn quiz-btn-primary" id="expNext" onclick="showResults()" disabled aria-label="הצג תוצאות">הצג תוצאות</button>
+    </div>
+  </div>
+
+  <!-- Step 4: Results -->
+  <div class="quiz-step" id="step4" role="region" aria-label="תוצאות השאלון">
+    <h2>הפפטידים שעשויים להתאים למטרה שלך</h2>
+    <p class="quiz-desc" id="resultsSubtitle"></p>
+    <div class="quiz-results-grid" id="resultsGrid"></div>
+
+    <!-- CTA -->
+    <div class="quiz-cta">
+      <h2>רוצה ייעוץ מותאם אישית?</h2>
+      <p>הצוות המקצועי שלנו ישמח לעזור לך לבחור את הפרוטוקול המדויק עבורך.</p>
+      <div class="quiz-cta-btns">
+        <a href="https://wa.me/972503637161?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9E%D7%99%D7%93%D7%A2%20%D7%A2%D7%9C%20%D7%A4%D7%A4%D7%98%D7%99%D7%93%D7%99%D7%9D%3F" target="_blank" class="btn btn-whatsapp btn-lg" aria-label="ייעוץ בוואטסאפ">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          ייעוץ בוואטסאפ
+        </a>
+        <a href="https://t.me/PeptideCenterIL" target="_blank" class="btn btn-telegram btn-lg" aria-label="ייעוץ בטלגרם">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          ייעוץ בטלגרם
+        </a>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="quiz-disclaimer">
+      <div class="quiz-disclaimer-icon">&#9888;&#65039;</div>
+      <p>
+        <strong>הצהרת אחריות רפואית:</strong> התוצאות מבוססות על מידע כללי בלבד ואינן מהוות ייעוץ רפואי.
+        רוב הפפטידים המוצגים אינם מאושרים לשימוש קליני בישראל.
+        יש להתייעץ עם רופא לפני כל שימוש.
+      </p>
+    </div>
+
+    <div class="quiz-actions" style="flex-direction: column; align-items: center;">
+      <button class="quiz-btn quiz-btn-restart" onclick="restartQuiz()" aria-label="התחל מחדש">🔄 התחל מחדש</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-links">
+    <a href="../guide/index.html">מדריך למתחילים</a>
+    <a href="../calculator/index.html">מחשבון מינון</a>
+    <a href="../safety/index.html">בטיחות</a>
+    <a href="../accessibility/index.html">נגישות</a>
+    <a href="../quiz/index.html">מצא את הפפטיד שלך</a>
+    <a href="../injection/index.html">מדריך הזרקה</a>
+  </div>
+  <p>&copy; 2025 PeptideCenter &middot; כל הזכויות שמורות &middot; <a href="../index.html#contact">צור קשר</a></p>
+  <p style="margin-top:0.5rem; font-size:0.75rem;">אתר זה מיועד למטרות מידע בלבד. אין לראות בתכנים תחליף לייעוץ רפואי מקצועי.</p>
+</footer>
+
+<script>
+// ─── Quiz State ───
+let currentStep = 1;
+let selectedGoal = null;
+let selectedExp = null;
+
+// ─── Recommendation Data ───
+const recommendations = {
+  weightloss: [
+    { name: 'Retatrutide', slug: 'retatrutide', desc: 'אגוניסט משולש (GLP-1/GIP/Glucagon) הנחקר כיעיל ביותר לירידה במשקל ושיפור מטבולי.' },
+    { name: 'MOTS-C', slug: 'mots-c', desc: 'פפטיד מיטוכונדריאלי התומך בחילוף חומרים, שריפת שומן ורגישות לאינסולין.' },
+    { name: 'NAD+', slug: 'nad', desc: 'קו-אנזים חיוני התומך בייצור אנרגיה תאית ובתפקוד מטבולי תקין.' },
+    { name: 'Tesamorelin', slug: 'tesamorelin', desc: 'אנלוג GHRH המסייע בהפחתת שומן בטני ושיפור הרכב הגוף.' }
+  ],
+  recovery: [
+    { name: 'BPC-157', slug: 'bpc157', desc: 'פפטיד גוף המקדם ריפוי רקמות, שרירים, גידים ומערכת העיכול.' },
+    { name: 'TB-500', slug: 'tb500', desc: 'פפטיד Thymosin Beta-4 התומך בשיקום רקמות, הפחתת דלקות וגמישות.' },
+    { name: 'GHK-Cu', slug: 'ghk-cu', desc: 'פפטיד נחושת המקדם תיקון רקמות, ייצור קולגן והתחדשות תאית.' },
+    { name: 'KPV', slug: 'kpv', desc: 'פפטיד אנטי-דלקתי התומך בריפוי רקמות ובמערכת החיסון.' }
+  ],
+  energy: [
+    { name: 'NAD+', slug: 'nad', desc: 'קו-אנזים חיוני התומך בייצור אנרגיה, תיקון DNA ובריאות תאית.' },
+    { name: 'MOTS-C', slug: 'mots-c', desc: 'פפטיד מיטוכונדריאלי המשפר ייצור אנרגיה וביצועים גופניים.' },
+    { name: 'SS-31', slug: 'ss-31', desc: 'פפטיד המגן על המיטוכונדריה ומשפר יעילות ייצור אנרגיה תאית.' },
+    { name: 'CJC-1295 DAC', slug: 'cjc-1295-dac', desc: 'אנלוג GHRH התומך בשחרור הורמון גדילה, אנרגיה והתאוששות.' }
+  ],
+  brain: [
+    { name: 'Semax', slug: 'semax', desc: 'פפטיד נוירוטרופי המשפר ריכוז, זיכרון ובהירות מחשבתית.' },
+    { name: 'Selank', slug: 'selank', desc: 'פפטיד אנכסיוליטי המסייע בהפחתת חרדה ושיפור תפקוד קוגניטיבי.' },
+    { name: 'DSIP', slug: 'dsip', desc: 'פפטיד המווסת שינה, מפחית מתח ותומך באיזון עצבי.' }
+  ],
+  skin: [
+    { name: 'GHK-Cu', slug: 'ghk-cu', desc: 'פפטיד נחושת המקדם ייצור קולגן, גמישות העור וצמיחת שיער.' },
+    { name: 'BPC-157', slug: 'bpc157', desc: 'פפטיד גוף התומך בתיקון רקמות, ריפוי העור והתחדשות תאית.' }
+  ]
+};
+
+const goalLabels = {
+  weightloss: 'הרזיה וירידה במשקל',
+  recovery: 'התאוששות ושיקום',
+  energy: 'אנרגיה וביצועים',
+  brain: 'ריכוז ומוח',
+  skin: 'עור ושיער'
+};
+
+// ─── Navigation ───
+function goToStep(step) {
+  // Hide current
+  document.getElementById('step' + currentStep).classList.remove('active');
+  currentStep = step;
+  // Show new
+  const newStep = document.getElementById('step' + step);
+  newStep.classList.remove('active');
+  // Force reflow for animation
+  void newStep.offsetWidth;
+  newStep.classList.add('active');
+  // Update progress
+  updateProgress();
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateProgress() {
+  const totalSteps = 4;
+  const pct = (currentStep / totalSteps) * 100;
+  const fill = document.getElementById('progressFill');
+  fill.style.width = pct + '%';
+  const bar = fill.parentElement;
+  bar.setAttribute('aria-valuenow', currentStep);
+}
+
+// ─── Goal Selection ───
+function selectGoal(el) {
+  // Clear previous
+  document.querySelectorAll('#step2 .quiz-option').forEach(opt => {
+    opt.classList.remove('selected');
+    opt.setAttribute('aria-checked', 'false');
+  });
+  el.classList.add('selected');
+  el.setAttribute('aria-checked', 'true');
+  selectedGoal = el.dataset.goal;
+  document.getElementById('goalNext').disabled = false;
+}
+
+// ─── Experience Selection ───
+function selectExp(el) {
+  document.querySelectorAll('#step3 .quiz-option').forEach(opt => {
+    opt.classList.remove('selected');
+    opt.setAttribute('aria-checked', 'false');
+  });
+  el.classList.add('selected');
+  el.setAttribute('aria-checked', 'true');
+  selectedExp = el.dataset.exp;
+  document.getElementById('expNext').disabled = false;
+}
+
+// ─── Show Results ───
+function showResults() {
+  if (!selectedGoal || !selectedExp) return;
+
+  const recs = recommendations[selectedGoal] || [];
+  const grid = document.getElementById('resultsGrid');
+  const subtitle = document.getElementById('resultsSubtitle');
+
+  subtitle.textContent = 'על בסיס המטרה שבחרת: ' + goalLabels[selectedGoal];
+
+  grid.innerHTML = '';
+  recs.forEach(r => {
+    const card = document.createElement('a');
+    card.className = 'quiz-result-card';
+    card.href = '../peptides/' + r.slug + '.html';
+    card.innerHTML =
+      '<h3>' + r.name + '</h3>' +
+      '<p>' + r.desc + '</p>' +
+      '<span class="quiz-result-link">📖 למידע נוסף ←</span>';
+    grid.appendChild(card);
+  });
+
+  goToStep(4);
+}
+
+// ─── Restart ───
+function restartQuiz() {
+  selectedGoal = null;
+  selectedExp = null;
+
+  // Reset selections
+  document.querySelectorAll('.quiz-option').forEach(opt => {
+    opt.classList.remove('selected');
+    opt.setAttribute('aria-checked', 'false');
+  });
+  document.getElementById('goalNext').disabled = true;
+  document.getElementById('expNext').disabled = true;
+
+  goToStep(1);
+}
+
+// ─── Keyboard navigation for option cards ───
+document.addEventListener('keydown', function(e) {
+  if (e.target.classList.contains('quiz-option') && (e.key === 'Enter' || e.key === ' ')) {
+    e.preventDefault();
+    e.target.click();
+  }
+});
+</script>
+<script src="../js/widgets.js?v=2"></script>
+</body>
+</html>

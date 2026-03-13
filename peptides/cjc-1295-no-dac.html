@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PeptideCenter</title>
+  <meta name="description" content="CJC-1295 no DAC — פפטיד משחרר הורמון גדילה ללא DAC, עם פעולה קצרה יותר. מידע על מינון ויתרונות." />
+  <title>CJC-1295 no DAC — PeptideCenter</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/styles.css?v=5" />
 </head>
@@ -63,13 +64,12 @@
 
 <script src="../js/peptides-data.js"></script>
 <script>
-const PEPTIDE_ID = 'nad';
+const PEPTIDE_ID = 'cjc1295nodac';
 const p = peptides.find(x => x.id === PEPTIDE_ID);
 
 if (p) {
   document.title = `${p.name} — PeptideCenter`;
 
-  // Parse dosage lines for quick stats
   const dosageLines = p.dosage.split('\n');
   const quickStats = [];
   dosageLines.forEach(line => {
@@ -84,7 +84,6 @@ if (p) {
     quickStats.push({ label: '—', value: '—', icon: '📊' });
   }
 
-  // Render Hero
   document.getElementById('peptideHero').innerHTML = `
     <div class="peptide-hero-top">
       <div class="peptide-hero-icon" style="background:${p.iconBg}">${p.icon}</div>
@@ -106,42 +105,71 @@ if (p) {
     </div>
   `;
 
-  // Render Detail Layout
   document.getElementById('detailLayout').innerHTML = `
     <div class="detail-main">
       <div class="info-card">
-        <div class="info-card-title"><div class="icon">📋</div> סקירה כללית</div>
+        <div class="info-card-title">
+          <div class="icon">📋</div>
+          סקירה כללית
+        </div>
         <p>${p.summary}</p>
       </div>
+
       <div class="info-card">
-        <div class="info-card-title"><div class="icon" style="background:rgba(0,255,170,0.1);">✅</div> יתרונות עיקריים</div>
-        <ul class="benefits-list">${p.benefits.map(b => `<li><span class="check">✓</span> ${b}</li>`).join('')}</ul>
+        <div class="info-card-title">
+          <div class="icon" style="background:rgba(0,255,170,0.1);">✅</div>
+          יתרונות עיקריים
+        </div>
+        <ul class="benefits-list">
+          ${p.benefits.map(b => `<li><span class="check">✓</span> ${b}</li>`).join('')}
+        </ul>
       </div>
+
       <div class="info-card">
-        <div class="info-card-title"><div class="icon" style="background:rgba(255,217,61,0.1);">⚠️</div> תופעות לוואי אפשריות</div>
-        <ul class="side-effects-list">${p.sideEffects.map(s => `<li><span class="warn-icon">⚠</span> ${s}</li>`).join('')}</ul>
+        <div class="info-card-title">
+          <div class="icon" style="background:rgba(255,217,61,0.1);">⚠️</div>
+          תופעות לוואי אפשריות
+        </div>
+        <ul class="side-effects-list">
+          ${p.sideEffects.map(s => `<li><span class="warn-icon">⚠</span> ${s}</li>`).join('')}
+        </ul>
       </div>
+
       <div class="info-card">
-        <div class="info-card-title"><div class="icon" style="background:rgba(0,198,255,0.1);">💉</div> מינון ופרוטוקול</div>
+        <div class="info-card-title">
+          <div class="icon" style="background:rgba(0,198,255,0.1);">💉</div>
+          מינון ופרוטוקול
+        </div>
         <div class="dosage-box">${p.dosage.replace(/\n/g, '<br>')}</div>
       </div>
-      <!-- Disclaimer -->
+
       <div class="disclaimer">
         <div class="disclaimer-icon">⚠️</div>
         <p><strong>הצהרת אחריות רפואית:</strong> המידע באתר זה מיועד למטרות <strong>אינפורמטיביות בלבד</strong> ואינו מהווה ייעוץ רפואי. רוב הפפטידים המוצגים אינם מאושרים לשימוש קליני בישראל. יש להתייעץ עם רופא לפני כל שימוש. השימוש בתכשירים אלו הוא באחריות המשתמש בלבד.</p>
       </div>
     </div>
+
     <div class="detail-sidebar">
       <div class="quick-guide">
         <h3>📖 מדריך מהיר</h3>
         ${dosageLines.map(line => {
           const parts = line.split(':');
           if (parts.length >= 2) {
-            return '<div class="quick-guide-item"><div class="quick-guide-icon">→</div><div><div class="quick-guide-label">' + parts[0].replace(/[⚠️]/g, '').trim() + '</div><div class="quick-guide-value">' + parts.slice(1).join(':').trim() + '</div></div></div>';
+            return `<div class="quick-guide-item">
+              <div class="quick-guide-icon">→</div>
+              <div>
+                <div class="quick-guide-label">${parts[0].replace(/[⚠️]/g, '').trim()}</div>
+                <div class="quick-guide-value">${parts.slice(1).join(':').trim()}</div>
+              </div>
+            </div>`;
           }
-          return '<div class="quick-guide-item"><div class="quick-guide-icon">→</div><div><div class="quick-guide-value">' + line + '</div></div></div>';
+          return `<div class="quick-guide-item">
+            <div class="quick-guide-icon">→</div>
+            <div><div class="quick-guide-value">${line}</div></div>
+          </div>`;
         }).join('')}
       </div>
+
       <div class="info-card" style="text-align:center;">
         <h3 style="margin-bottom:1rem;font-size:1.1rem;">צריך ייעוץ על ${p.name}?</h3>
         <div style="display:flex;flex-direction:column;gap:0.8rem;">

@@ -63,41 +63,32 @@
     });
   }
 
-  // ---- Floating Contact Widget ----
-  function initContactWidget() {
-    var waPhone = '972503637161';
-    var waText = '%D7%A9%D7%9C%D7%95%D7%9D%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9E%D7%99%D7%93%D7%A2%20%D7%A2%D7%9C%20%D7%A4%D7%A4%D7%98%D7%99%D7%93%D7%99%D7%9D%3F';
-    var tgUser = 'PeptideCenterIL';
+  // ---- Navbar Icon Buttons (WA, TG, Accessibility) ----
+  function initNavIcons() {
+    var nav = document.querySelector('nav');
+    if (!nav) return;
 
-    var html =
-      '<div class="contact-fab" id="contactFab">' +
-        '<div class="fab-label">צריכים עזרה?</div>' +
-        '<div class="fab-options">' +
-          '<a href="https://wa.me/' + waPhone + '?text=' + waText + '" target="_blank" rel="noopener" class="fab-option fab-wa" aria-label="ייעוץ בוואטסאפ">' +
-            '💬 ייעוץ בוואטסאפ' +
-          '</a>' +
-          '<a href="https://t.me/' + tgUser + '" target="_blank" rel="noopener" class="fab-option fab-tg" aria-label="ייעוץ בטלגרם">' +
-            '✈️ ייעוץ בטלגרם' +
-          '</a>' +
-        '</div>' +
-        '<button class="fab-main-btn" aria-label="צריכים עזרה?" onclick="toggleContactFab()">💬</button>' +
-      '</div>';
+    var icons = document.createElement('div');
+    icons.className = 'nav-icons';
+    icons.innerHTML =
+      '<a href="https://wa.me/message/6HUAMNFA4B67K1" target="_blank" rel="noopener" class="nav-icon-btn wa" aria-label="וואטסאפ" title="וואטסאפ">' +
+        '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>' +
+      '</a>' +
+      '<a href="https://t.me/PeptideCenterIL" target="_blank" rel="noopener" class="nav-icon-btn tg" aria-label="טלגרם" title="טלגרם">' +
+        '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>' +
+      '</a>' +
+      '<button class="nav-icon-btn a11y" onclick="toggleA11yPanel()" aria-label="נגישות" title="נגישות">' +
+        '<span class="a11y-icon-text">♿</span>' +
+      '</button>';
 
-    document.body.insertAdjacentHTML('beforeend', html);
-  }
-
-  window.toggleContactFab = function () {
-    var fab = document.getElementById('contactFab');
-    if (fab) fab.classList.toggle('open');
-  };
-
-  // Close FAB when clicking outside
-  document.addEventListener('click', function (e) {
-    var fab = document.getElementById('contactFab');
-    if (fab && fab.classList.contains('open') && !fab.contains(e.target)) {
-      fab.classList.remove('open');
+    // Insert before the hamburger button (so it appears to the left of hamburger on mobile, or left of logo area in RTL)
+    var hamburger = nav.querySelector('.hamburger');
+    if (hamburger) {
+      nav.insertBefore(icons, hamburger);
+    } else {
+      nav.appendChild(icons);
     }
-  });
+  }
 
   // ---- Accessibility Widget ----
   var a11yState = {
@@ -179,40 +170,49 @@
 
   function initAccessibilityWidget() {
     var a11yLink = basePath + 'accessibility/index.html';
-    var html =
-      '<div class="a11y-widget" id="a11yWidget">' +
-        '<button class="a11y-btn" onclick="toggleA11yPanel()" aria-label="נגישות" tabindex="0">♿</button>' +
-        '<div class="a11y-panel" id="a11yPanel">' +
-          '<div class="a11y-panel-header">' +
-            '<h3>הגדרות נגישות</h3>' +
-            '<button class="a11y-panel-close" onclick="toggleA11yPanel()" aria-label="סגור">✕</button>' +
-          '</div>' +
-          '<div class="a11y-options">' +
-            '<button class="a11y-option" data-action="font-up" onclick="a11yAction(\'font-up\')"><span class="a11y-icon">🔍</span> הגדלת טקסט</button>' +
-            '<button class="a11y-option" data-action="font-down" onclick="a11yAction(\'font-down\')"><span class="a11y-icon">🔎</span> הקטנת טקסט</button>' +
-            '<button class="a11y-option" data-action="high-contrast" onclick="a11yAction(\'high-contrast\')"><span class="a11y-icon">◐</span> ניגודיות גבוהה</button>' +
-            '<button class="a11y-option" data-action="grayscale" onclick="a11yAction(\'grayscale\')"><span class="a11y-icon">⚫</span> שחור-לבן</button>' +
-            '<button class="a11y-option" data-action="highlight-links" onclick="a11yAction(\'highlight-links\')"><span class="a11y-icon">🔗</span> הדגשת קישורים</button>' +
-            '<button class="a11y-option" data-action="readable-font" onclick="a11yAction(\'readable-font\')"><span class="a11y-icon">Aa</span> גופן קריא</button>' +
-            '<button class="a11y-option" onclick="a11yAction(\'reset\')"><span class="a11y-icon">↺</span> איפוס הגדרות</button>' +
-          '</div>' +
-          '<a href="' + a11yLink + '" class="a11y-statement-link">הצהרת נגישות</a>' +
-        '</div>' +
-      '</div>';
+    // Attach panel to the a11y nav button
+    var a11yBtn = document.querySelector('.nav-icon-btn.a11y');
+    if (!a11yBtn) return;
 
-    document.body.insertAdjacentHTML('beforeend', html);
+    var wrapper = document.createElement('div');
+    wrapper.className = 'a11y-widget';
+    wrapper.id = 'a11yWidget';
+    // Move button into wrapper
+    a11yBtn.parentNode.insertBefore(wrapper, a11yBtn);
+    wrapper.appendChild(a11yBtn);
+
+    var panel = document.createElement('div');
+    panel.className = 'a11y-panel';
+    panel.id = 'a11yPanel';
+    panel.innerHTML =
+      '<div class="a11y-panel-header">' +
+        '<h3>הגדרות נגישות</h3>' +
+        '<button class="a11y-panel-close" onclick="toggleA11yPanel()" aria-label="סגור">✕</button>' +
+      '</div>' +
+      '<div class="a11y-options">' +
+        '<button class="a11y-option" data-action="font-up" onclick="a11yAction(\'font-up\')"><span class="a11y-icon">🔍</span> הגדלת טקסט</button>' +
+        '<button class="a11y-option" data-action="font-down" onclick="a11yAction(\'font-down\')"><span class="a11y-icon">🔎</span> הקטנת טקסט</button>' +
+        '<button class="a11y-option" data-action="high-contrast" onclick="a11yAction(\'high-contrast\')"><span class="a11y-icon">◐</span> ניגודיות גבוהה</button>' +
+        '<button class="a11y-option" data-action="grayscale" onclick="a11yAction(\'grayscale\')"><span class="a11y-icon">⚫</span> שחור-לבן</button>' +
+        '<button class="a11y-option" data-action="highlight-links" onclick="a11yAction(\'highlight-links\')"><span class="a11y-icon">🔗</span> הדגשת קישורים</button>' +
+        '<button class="a11y-option" data-action="readable-font" onclick="a11yAction(\'readable-font\')"><span class="a11y-icon">Aa</span> גופן קריא</button>' +
+        '<button class="a11y-option" onclick="a11yAction(\'reset\')"><span class="a11y-icon">↺</span> איפוס הגדרות</button>' +
+      '</div>' +
+      '<a href="' + a11yLink + '" class="a11y-statement-link">הצהרת נגישות</a>';
+
+    wrapper.appendChild(panel);
     loadA11yState();
   }
 
-  // Close accessibility panel when clicking outside
+  // Close accessibility panel when clicking outside (delayed to avoid same-click close)
   document.addEventListener('click', function (e) {
     var widget = document.getElementById('a11yWidget');
-    if (widget) {
-      var panel = document.getElementById('a11yPanel');
-      if (panel && panel.classList.contains('open') && !widget.contains(e.target)) {
-        panel.classList.remove('open');
-      }
-    }
+    if (!widget) return;
+    var panel = document.getElementById('a11yPanel');
+    if (!panel || !panel.classList.contains('open')) return;
+    // Don't close if click is on the widget itself (button or panel)
+    if (widget.contains(e.target)) return;
+    panel.classList.remove('open');
   });
 
   // ---- FAQ Accordion ----
@@ -225,7 +225,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     generateParticles();
     initDropdown();
-    initContactWidget();
+    initNavIcons();
     initAccessibilityWidget();
   });
 })();

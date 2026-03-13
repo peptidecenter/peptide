@@ -4,9 +4,164 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PeptideCenter — מדריך מקצועי לפפטידים. מידע מדעי מקיף על מינונים, יתרונות ותופעות לוואי. ייעוץ אישי בוואטסאפ ובטלגרם." />
   <title>PeptideCenter | מדריך הפפטידים המקצועי</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css?v=4" />
+  <link rel="stylesheet" href="css/styles.css?v=5" />
+  <style>
+    /* Homepage-specific styles */
+    .home-goals-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.2rem;
+    }
+    .home-goal-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.8rem 1.2rem;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .home-goal-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,198,255,0.04), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .home-goal-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0,198,255,0.35);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .home-goal-card:hover::before { opacity: 1; }
+    .home-goal-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
+    }
+    .home-goal-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .home-goal-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .popular-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+    .popular-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .popular-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0,198,255,0.35);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+    .popular-card-head {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .popular-card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .popular-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .popular-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .popular-card-link {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-top: auto;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+    }
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s;
+      text-align: center;
+    }
+    .tool-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0,255,170,0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .tool-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .tool-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .tool-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .home-goals-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .home-goals-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -20,7 +175,6 @@
     <span></span><span></span><span></span>
   </button>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#peptides">פפטידים</a></li>
     <li><a href="wiki/index.html">ויקי</a></li>
     <li class="nav-dropdown">
       <a href="#" class="nav-dropdown-toggle">מדריכים ▾</a>
@@ -29,6 +183,8 @@
         <li><a href="reconstitution/index.html">מדריך מהילה</a></li>
         <li><a href="calculator/index.html">מחשבון מינון</a></li>
         <li><a href="goals/index.html">מדריכים לפי מטרה</a></li>
+        <li><a href="quiz/index.html">מצא את הפפטיד שלך</a></li>
+        <li><a href="injection/index.html">מדריך הזרקה</a></li>
       </ul>
     </li>
     <li><a href="safety/index.html">בטיחות</a></li>
@@ -36,98 +192,113 @@
   </ul>
 </nav>
 
-<!-- Hero -->
+<!-- Section 1: Hero -->
 <div class="hero">
   <h1>
-    המדריך השלם<br/>
-    ל<span class="highlight">פפטידים</span> המתקדמים
+    המדריך המקיף<br/>ל<span class="highlight">פפטידים</span>
   </h1>
   <p>
-    מידע מדעי מקיף על פפטידים מובילים — מנגנון פעולה, מינונים, יתרונות ותופעות לוואי.
-    ייעוץ מקצועי אישי דרך ווטסאפ וטלגרם.
+    מאגר מידע מדעי מקיף על פפטידים מובילים — מנגנון פעולה, מינונים מדויקים, יתרונות מוכחים ותופעות לוואי.
+    הכל במקום אחד, בעברית.
   </p>
   <div class="hero-btns">
-    <a href="#peptides" class="btn btn-primary">📋 לכל הפפטידים</a>
-    <a href="https://wa.me/972503637161?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9E%D7%99%D7%93%D7%A2%20%D7%A2%D7%9C%20%D7%A4%D7%A4%D7%98%D7%99%D7%93%D7%99%D7%9D%3F" target="_blank" class="btn btn-whatsapp">💬 ייעוץ בוואטסאפ</a>
-    <a href="https://t.me/PeptideCenterIL" target="_blank" class="btn btn-telegram">✈️ ייעוץ בטלגרם</a>
+    <a href="guide/index.html" class="btn btn-primary">📖 לקריאת המדריך</a>
+    <a href="https://wa.me/972503637161?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9E%D7%99%D7%93%D7%A2%20%D7%A2%D7%9C%20%D7%A4%D7%A4%D7%98%D7%99%D7%93%D7%99%D7%9D%3F" target="_blank" class="btn btn-whatsapp">💬 צור קשר לייעוץ</a>
   </div>
 </div>
 
 <!-- Stats -->
 <div class="stats-bar">
-  <div class="stat"><div class="stat-num">9+</div><div class="stat-label">פפטידים מתועדים</div></div>
+  <div class="stat"><div class="stat-num">20+</div><div class="stat-label">פפטידים מתועדים</div></div>
   <div class="stat"><div class="stat-num">100%</div><div class="stat-label">מידע מבוסס מחקר</div></div>
   <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">ייעוץ זמין</div></div>
 </div>
 
-<!-- Features / About Section -->
-<section id="about">
+<!-- Section 2: Goals Grid -->
+<section id="goals">
   <div class="section-title">
-    <h2>במה פפטידים עוזרים לי?</h2>
-    <p>בחר\י את הסיבה עבורך</p>
+    <h2>במה פפטידים יכולים לעזור?</h2>
+    <p>בחרו את המטרה שלכם ומצאו את הפפטידים המתאימים</p>
   </div>
-  <div class="features-grid">
-    <a href="goals/index.html#recovery" class="feature-card">
-      <div class="feature-icon">🩹</div>
-      <h3>שיקום רקמות והתאוששות</h3>
-      <p>פפטיד התומך בתהליכי ריפוי טבעיים של שרירים, גידים ורצועות. מסייע בהפחתת דלקות והתאוששות מהירה לאחר מאמץ.</p>
+  <div class="home-goals-grid">
+    <a href="goals/index.html#weight" class="home-goal-card">
+      <div class="home-goal-icon">🔥</div>
+      <h3>הרזיה</h3>
+      <p>ירידה במשקל, ויסות תיאבון וחילוף חומרים</p>
     </a>
-    <a href="goals/index.html#recovery" class="feature-card">
-      <div class="feature-icon">🧬</div>
-      <h3>התחדשות תאים ושיקום פציעות</h3>
-      <p>מסייע בשיקום שרירים ורקמות פגועות, תומך ביצירת כלי דם חדשים, ואידיאלי לעוסקים בפעילות גופנית אינטנסיבית.</p>
+    <a href="goals/index.html#recovery" class="home-goal-card">
+      <div class="home-goal-icon">💪</div>
+      <h3>התאוששות</h3>
+      <p>שיקום פציעות, ריפוי רקמות והפחתת דלקות</p>
     </a>
-    <a href="goals/index.html#energy" class="feature-card">
-      <div class="feature-icon">⚡</div>
-      <h3>ייצור אנרגיה ותפקוד מטבולי</h3>
-      <p>קו-אנזים חיוני התומך בייצור האנרגיה בתאים, בתיקון DNA, ובשמירה על בריאות תאית ורמות חיוניות גבוהות.</p>
+    <a href="goals/index.html#energy" class="home-goal-card">
+      <div class="home-goal-icon">⚡</div>
+      <h3>אנרגיה</h3>
+      <p>ביצועים גופניים, מטבוליזם ותפקוד מיטוכונדריאלי</p>
     </a>
-    <a href="goals/index.html#skin" class="feature-card">
-      <div class="feature-icon">✨</div>
-      <h3>בריאות העור וצמיחת שיער</h3>
-      <p>פפטיד נחושת התומך בייצור קולגן, גמישות העור, תיקון רקמות, ונחקר בהקשר של עידוד צמיחת שיער.</p>
+    <a href="goals/index.html#brain" class="home-goal-card">
+      <div class="home-goal-icon">🧠</div>
+      <h3>ריכוז ומוח</h3>
+      <p>שיפור קוגניטיבי, זיכרון, בהירות ואיזון עצבי</p>
     </a>
-    <a href="goals/index.html#brain" class="feature-card">
-      <div class="feature-icon">🧠</div>
-      <h3>איזון עצבי ותפקוד קוגניטיבי</h3>
-      <p>פפטיד נוירוביולוגי המסייע בשיפור ריכוז, בהירות מחשבתית, איזון מצב הרוח והתמודדות עם לחץ ועומס מנטלי.</p>
-    </a>
-    <a href="goals/index.html#energy" class="feature-card">
-      <div class="feature-icon">⚛️</div>
-      <h3>תפקוד מיטוכונדריאלי</h3>
-      <p>מתמקד בתחנות הכוח של התא לשיפור יעילות ייצור האנרגיה, הפחתת עקה חמצונית ותמיכה בהתאוששות תאית.</p>
+    <a href="goals/index.html#skin" class="home-goal-card">
+      <div class="home-goal-icon">✨</div>
+      <h3>עור ושיער</h3>
+      <p>קולגן, גמישות העור, התחדשות וצמיחת שיער</p>
     </a>
   </div>
 </section>
 
-<!-- Peptides Section -->
-<section id="peptides" style="padding-top: 1rem;">
+<!-- Section 3: Popular Peptides -->
+<section id="peptides">
   <div class="section-title">
-    <h2>מדריך הפפטידים</h2>
-    <p>לחץ על כל כרטיס לפרטים מלאים כולל מינונים, יתרונות ותופעות לוואי</p>
+    <h2>פפטידים נפוצים</h2>
+    <p>הפפטידים הנחקרים והמבוקשים ביותר</p>
   </div>
-
-  <div class="peptide-grid" id="peptideGrid"></div>
+  <div class="popular-grid" id="popularGrid"></div>
+  <div style="text-align:center;margin-top:2rem;">
+    <a href="wiki/index.html" class="btn btn-outline">📋 לכל 20+ הפפטידים במאגר</a>
+  </div>
 </section>
 
-<!-- Disclaimer -->
-<div class="disclaimer">
-  <div class="disclaimer-icon">⚠️</div>
-  <p>
-    <strong>הצהרת אחריות רפואית:</strong> המידע באתר זה מיועד למטרות <strong>אינפורמטיביות בלבד</strong>
-    ואינו מהווה ייעוץ רפואי. רוב הפפטידים המוצגים אינם מאושרים לשימוש קליני בישראל.
-    יש להתייעץ עם רופא לפני כל שימוש. השימוש בתכשירים אלו הוא באחריות המשתמש בלבד.
-  </p>
-</div>
+<!-- Section 4: Tools -->
+<section id="tools">
+  <div class="section-title">
+    <h2>כלים ומדריכים שימושיים</h2>
+    <p>כל מה שצריך כדי להשתמש בפפטידים בצורה בטוחה</p>
+  </div>
+  <div class="tools-grid">
+    <a href="calculator/index.html" class="tool-card">
+      <span class="tool-icon">🧮</span>
+      <h3>מחשבון מינון</h3>
+      <p>חשבו את המינון המדויק לפי ריכוז, נפח ומשקל</p>
+    </a>
+    <a href="reconstitution/index.html" class="tool-card">
+      <span class="tool-icon">🧪</span>
+      <h3>מדריך מהילה</h3>
+      <p>הוראות שלב-אחר-שלב להכנת הפפטיד לשימוש</p>
+    </a>
+    <a href="injection/index.html" class="tool-card">
+      <span class="tool-icon">💉</span>
+      <h3>מדריך הזרקה</h3>
+      <p>הזרקה תת-עורית בטוחה — אתרים, ציוד וטכניקה</p>
+    </a>
+    <a href="guide/index.html" class="tool-card">
+      <span class="tool-icon">📖</span>
+      <h3>המדריך המלא</h3>
+      <p>מדריך מקיף למתחילים ולמשתמשים מנוסים</p>
+    </a>
+  </div>
+</section>
 
-<!-- Contact Section -->
+<!-- Section 5: Contact -->
 <section id="contact" style="padding-top: 2rem;">
   <div class="contact-section">
     <div>✨</div>
-    <h2>מוכן להתחיל?</h2>
+    <h2>צריכים מידע נוסף?</h2>
     <p>
-      צור קשר עם הצוות המקצועי שלנו לייעוץ אישי, בחירת הפרוטוקול המתאים לך,
-      ומידע על הזמנה. אנחנו זמינים בוואטסאפ ובטלגרם.
+      צוות הייעוץ שלנו זמין לשאלות על פפטידים, פרוטוקולים ומינונים.
+      פנו אלינו בוואטסאפ או בטלגרם.
     </p>
     <div class="contact-btns">
       <a href="https://wa.me/972503637161?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9E%D7%99%D7%93%D7%A2%20%D7%A2%D7%9C%20%D7%A4%D7%A4%D7%98%D7%99%D7%93%D7%99%D7%9D%3F" target="_blank" class="btn btn-whatsapp btn-lg">
@@ -142,6 +313,16 @@
   </div>
 </section>
 
+<!-- Section 6: Disclaimer -->
+<div class="disclaimer">
+  <div class="disclaimer-icon">⚠️</div>
+  <p>
+    <strong>הצהרת אחריות רפואית:</strong> המידע באתר זה מיועד למטרות <strong>אינפורמטיביות בלבד</strong>
+    ואינו מהווה ייעוץ רפואי. רוב הפפטידים המוצגים אינם מאושרים לשימוש קליני בישראל.
+    יש להתייעץ עם רופא לפני כל שימוש. השימוש בתכשירים אלו הוא באחריות המשתמש בלבד.
+  </p>
+</div>
+
 <!-- Footer -->
 <footer>
   <div class="footer-links">
@@ -149,40 +330,39 @@
     <a href="calculator/index.html">מחשבון מינון</a>
     <a href="safety/index.html">בטיחות</a>
     <a href="accessibility/index.html">נגישות</a>
+    <a href="quiz/index.html">מצא את הפפטיד שלך</a>
+    <a href="injection/index.html">מדריך הזרקה</a>
   </div>
-  <p>© 2025 PeptideCenter · כל הזכויות שמורות · <a href="#contact">צור קשר</a></p>
+  <p>&copy; 2025 PeptideCenter &middot; כל הזכויות שמורות &middot; <a href="#contact">צור קשר</a></p>
   <p style="margin-top:0.5rem; font-size:0.75rem;">אתר זה מיועד למטרות מידע בלבד. אין לראות בתכנים תחליף לייעוץ רפואי מקצועי.</p>
 </footer>
 
 <script src="js/peptides-data.js"></script>
 <script>
-// ─── Render Peptide Cards (Link-based) ───
-function renderCards() {
-  const grid = document.getElementById('peptideGrid');
-  peptides.forEach(p => {
+// ─── Popular Peptides (filtered subset) ───
+const popularIds = ['bpc157', 'tb500', 'nad', 'motsc', 'ghkcu', 'semax', 'selank', 'ss31', 'retatrutide'];
+
+function renderPopular() {
+  const grid = document.getElementById('popularGrid');
+  const popular = peptides.filter(p => popularIds.includes(p.id));
+  popular.forEach(p => {
     const card = document.createElement('a');
-    card.className = 'peptide-card card-link';
-    card.href = `peptides/${p.id}.html`;
+    card.className = 'popular-card';
+    card.href = `peptides/${p.slug || p.id}.html`;
     card.innerHTML = `
-      <div class="card-header">
-        <div class="card-icon" style="background:${p.iconBg}">${p.icon}</div>
-        <div class="card-title-block">
-          <h3>${p.name}</h3>
-          <div class="sub">${p.fullName}</div>
-        </div>
+      <div class="popular-card-head">
+        <div class="popular-card-icon" style="background:${p.iconBg}">${p.icon}</div>
+        <h3>${p.name}</h3>
       </div>
-      <div class="card-body">
-        <p>${p.summary}</p>
-        <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-        <div class="card-link-btn">📖 למידע נוסף ←</div>
-      </div>
+      <p>${p.summary.length > 100 ? p.summary.substring(0, 100) + '...' : p.summary}</p>
+      <div class="popular-card-link">למידע נוסף ←</div>
     `;
     grid.appendChild(card);
   });
 }
 
-renderCards();
+renderPopular();
 </script>
-<script src="js/widgets.js"></script>
+<script src="js/widgets.js?v=2"></script>
 </body>
 </html>
