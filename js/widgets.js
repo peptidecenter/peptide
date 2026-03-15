@@ -79,6 +79,26 @@
       '</button>';
 
     document.body.appendChild(container);
+
+    // Auto-hide floating buttons on mobile when scrolling down
+    if (window.innerWidth <= 768) {
+      var lastScrollY = window.scrollY;
+      var hideTimer = null;
+      window.addEventListener('scroll', function () {
+        var currentY = window.scrollY;
+        if (currentY > lastScrollY && currentY > 100) {
+          container.classList.add('hidden');
+        } else {
+          container.classList.remove('hidden');
+        }
+        lastScrollY = currentY;
+        // Show buttons after user stops scrolling
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(function () {
+          container.classList.remove('hidden');
+        }, 1500);
+      }, { passive: true });
+    }
   }
 
   // ---- Accessibility Widget ----
