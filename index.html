@@ -153,6 +153,116 @@
         grid-template-columns: repeat(2, 1fr);
       }
     }
+    /* Interactive goal content panel */
+    .home-goal-card { cursor: pointer; }
+    .home-goal-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 25px rgba(0,198,255,0.15);
+      transform: translateY(-4px);
+    }
+    .home-goal-card.active::before { opacity: 1; }
+    .goal-content-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, opacity 0.4s ease;
+      opacity: 0;
+    }
+    .goal-content-panel.open {
+      max-height: 900px;
+      opacity: 1;
+      margin-top: 2rem;
+    }
+    .goal-peptides-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .goal-peptide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.2rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s;
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+    }
+    .goal-peptide-card:hover {
+      border-color: rgba(0,198,255,0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    .goal-peptide-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0;
+    }
+    .goal-peptide-info h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .goal-peptide-info p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin: 0; }
+    .goal-cta { text-align: center; margin-top: 1.2rem; }
+    .goal-more-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .goal-more-link:hover { color: var(--accent); }
+
+    /* Find Your Peptide CTA section */
+    .find-peptide-section {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .find-peptide-inner {
+      background: linear-gradient(135deg, rgba(0,198,255,0.06), rgba(123,94,167,0.06));
+      border: 1px solid rgba(0,198,255,0.2);
+      border-radius: 24px;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .find-peptide-inner::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0,198,255,0.06), transparent 70%);
+      pointer-events: none;
+    }
+    .find-peptide-inner h2 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
+    .find-peptide-inner p {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .find-peptide-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
     @media (max-width: 600px) {
       .home-goals-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -160,6 +270,11 @@
       .tools-grid {
         grid-template-columns: 1fr;
       }
+      .goal-peptides-grid {
+        grid-template-columns: 1fr;
+      }
+      .find-peptide-inner { padding: 2.5rem 1.5rem; }
+      .find-peptide-inner h2 { font-size: 1.4rem; }
     }
   </style>
 </head>
@@ -221,32 +336,33 @@
     <p>בחרו את המטרה שלכם ומצאו את הפפטידים המתאימים</p>
   </div>
   <div class="home-goals-grid">
-    <a href="goals/index.html#weight" class="home-goal-card">
+    <div class="home-goal-card" data-goal="weight" onclick="showGoalContent('weight')">
       <div class="home-goal-icon">🔥</div>
       <h3>הרזיה</h3>
       <p>ירידה במשקל, ויסות תיאבון וחילוף חומרים</p>
-    </a>
-    <a href="goals/index.html#recovery" class="home-goal-card">
+    </div>
+    <div class="home-goal-card" data-goal="recovery" onclick="showGoalContent('recovery')">
       <div class="home-goal-icon">💪</div>
       <h3>התאוששות</h3>
       <p>שיקום פציעות, ריפוי רקמות והפחתת דלקות</p>
-    </a>
-    <a href="goals/index.html#energy" class="home-goal-card">
+    </div>
+    <div class="home-goal-card" data-goal="energy" onclick="showGoalContent('energy')">
       <div class="home-goal-icon">⚡</div>
       <h3>אנרגיה</h3>
       <p>ביצועים גופניים, מטבוליזם ותפקוד מיטוכונדריאלי</p>
-    </a>
-    <a href="goals/index.html#brain" class="home-goal-card">
+    </div>
+    <div class="home-goal-card" data-goal="brain" onclick="showGoalContent('brain')">
       <div class="home-goal-icon">🧠</div>
       <h3>ריכוז ומוח</h3>
       <p>שיפור קוגניטיבי, זיכרון, בהירות ואיזון עצבי</p>
-    </a>
-    <a href="goals/index.html#skin" class="home-goal-card">
+    </div>
+    <div class="home-goal-card" data-goal="skin" onclick="showGoalContent('skin')">
       <div class="home-goal-icon">✨</div>
       <h3>עור ושיער</h3>
       <p>קולגן, גמישות העור, התחדשות וצמיחת שיער</p>
-    </a>
+    </div>
   </div>
+  <div class="goal-content-panel" id="goalContentPanel"></div>
 </section>
 
 <!-- Section 3: Popular Peptides -->
@@ -291,7 +407,19 @@
   </div>
 </section>
 
-<!-- Section 5: Contact -->
+<!-- Section 5: Find Your Peptide CTA -->
+<section class="find-peptide-section">
+  <div class="find-peptide-inner">
+    <h2>לא בטוחים איזה פפטיד מתאים לכם?</h2>
+    <p>השתמשו בכלי ההתאמה החכם כדי לגלות אילו פפטידים קשורים למטרה שלכם — תוך דקה.</p>
+    <div class="find-peptide-buttons">
+      <a href="quiz/index.html" class="btn btn-primary btn-lg">🔍 מצא את הפפטיד שלך</a>
+      <a href="https://wa.me/message/6HUAMNFA4B67K1" target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg">💬 ייעוץ בוואטסאפ</a>
+    </div>
+  </div>
+</section>
+
+<!-- Section 6: Contact -->
 <section id="contact" style="padding-top: 2rem;">
   <div class="contact-section">
     <div>✨</div>
@@ -362,6 +490,73 @@ function renderPopular() {
 }
 
 renderPopular();
+
+// ─── Interactive Goals Section ───
+const goalMap = {
+  weight:   ['retatrutide', 'motsc', 'nad', 'tesamorelin'],
+  recovery: ['bpc157', 'tb500', 'ghkcu', 'kpv'],
+  energy:   ['nad', 'motsc', 'ss31', 'cjc1295dac'],
+  brain:    ['semax', 'selank', 'dsip'],
+  skin:     ['ghkcu', 'bpc157', 'mt2']
+};
+
+const goalLabels = {
+  weight: 'הרזיה',
+  recovery: 'התאוששות',
+  energy: 'אנרגיה',
+  brain: 'ריכוז ומוח',
+  skin: 'עור ושיער'
+};
+
+let activeGoal = null;
+
+window.showGoalContent = function(goal) {
+  const cards = document.querySelectorAll('.home-goal-card');
+  const panel = document.getElementById('goalContentPanel');
+
+  // Toggle off if clicking same goal
+  if (activeGoal === goal) {
+    activeGoal = null;
+    cards.forEach(c => c.classList.remove('active'));
+    panel.classList.remove('open');
+    return;
+  }
+
+  activeGoal = goal;
+  cards.forEach(c => {
+    c.classList.toggle('active', c.getAttribute('data-goal') === goal);
+  });
+
+  const ids = goalMap[goal] || [];
+  const matched = peptides.filter(p => ids.includes(p.id));
+
+  let html = '<div class="goal-peptides-grid">';
+  matched.forEach(p => {
+    const slug = p.slug || p.id;
+    const desc = p.summary.length > 90 ? p.summary.substring(0, 90) + '...' : p.summary;
+    html += `
+      <a href="peptides/${slug}.html" class="goal-peptide-card">
+        <div class="goal-peptide-icon" style="background:${p.iconBg}">${p.icon}</div>
+        <div class="goal-peptide-info">
+          <h4>${p.name}</h4>
+          <p>${desc}</p>
+        </div>
+      </a>`;
+  });
+  html += '</div>';
+  html += '<div class="goal-cta">';
+  html += '<a href="quiz/index.html" class="btn btn-primary">🔍 מצא את הפפטיד המתאים לך</a>';
+  html += '<br><a href="goals/index.html#' + goal + '" class="goal-more-link">לכל הפפטידים בקטגוריית ' + goalLabels[goal] + ' →</a>';
+  html += '</div>';
+
+  panel.innerHTML = html;
+  panel.classList.add('open');
+
+  // Smooth scroll to panel
+  setTimeout(() => {
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 100);
+};
 </script>
 <script src="js/widgets.js?v=2"></script>
 </body>
