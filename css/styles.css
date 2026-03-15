@@ -1129,7 +1129,7 @@ body.a11y-readable-font, body.a11y-readable-font * { font-family: Arial, Helveti
   .wiki-controls { flex-direction: column; }
   .quick-stats { grid-template-columns: repeat(2, 1fr); }
   .detail-layout { grid-template-columns: 1fr; }
-  .detail-sidebar { order: -1; }
+  .detail-sidebar { order: -1; position: static; align-self: auto; }
   .filter-panel { width: 100%; }
   .peptide-hero-info h1 { font-size: 1.8rem; }
   .content-page { padding: 6.5rem 1rem 2rem; }
