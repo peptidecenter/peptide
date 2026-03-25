@@ -311,7 +311,7 @@
       });
     }
 
-    // Show after 90 seconds
+    // Show after 30 seconds
     setTimeout(function () {
       overlay.classList.add('open');
       sessionStorage.setItem('leadPopupShown', '1');
@@ -320,7 +320,7 @@
         var helper = document.getElementById('leadHelper');
         if (helper) helper.classList.add('visible');
       }, 4000);
-    }, 90000);
+    }, 30000);
   }
 
   window.closeLeadPopup = function () {
