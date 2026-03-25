@@ -1145,4 +1145,193 @@ body.a11y-readable-font, body.a11y-readable-font * { font-family: Arial, Helveti
   .float-btn-a11y { width: 34px; height: 34px; }
   .float-btn-a11y .a11y-icon-text { font-size: 1rem; }
   .a11y-panel { width: 260px; }
+  .lead-popup { width: 92vw; max-height: 90vh; overflow-y: auto; padding: 2rem 1.2rem; }
+  .lead-popup h2 { font-size: 1.3rem; }
+  .protocol-grid { grid-template-columns: 1fr; }
+}
+
+/* ===========================
+   Lead Capture Popup
+   =========================== */
+.lead-popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(5,8,16,0.88);
+  backdrop-filter: blur(10px);
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.lead-popup-overlay.open { display: flex; }
+.lead-popup {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  max-width: 440px;
+  width: 100%;
+  position: relative;
+  animation: slide-down 0.4s ease;
+  text-align: center;
+}
+.lead-popup-close {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  line-height: 1;
+}
+.lead-popup-close:hover { color: var(--text); }
+.lead-popup h2 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 0.6rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.lead-popup-subtitle {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+.lead-popup-highlight {
+  display: inline-block;
+  background: rgba(0,255,170,0.08);
+  border: 1px solid rgba(0,255,170,0.2);
+  border-radius: 50px;
+  padding: 0.3rem 1rem;
+  font-size: 0.9rem;
+  color: var(--accent3);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.lead-popup-supporting {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
+}
+.lead-popup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+.lead-popup-form input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  color: var(--text);
+  font-family: 'Rubik', sans-serif;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  text-align: right;
+}
+.lead-popup-form input:focus { border-color: var(--accent); }
+.lead-popup-form input::placeholder { color: var(--text-muted); opacity: 0.5; }
+.lead-btn {
+  background: linear-gradient(135deg, var(--accent), #0099cc);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.9rem;
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.lead-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,198,255,0.25); }
+.lead-btn:active { transform: scale(0.98); }
+.lead-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.lead-popup-divider {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin: 1rem 0 0.8rem;
+  opacity: 0.6;
+}
+.lead-popup-channels {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+}
+.lead-popup-channels a {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.lead-popup-channels .lead-wa { color: #25d366; border: 1px solid rgba(37,211,102,0.3); }
+.lead-popup-channels .lead-wa:hover { background: rgba(37,211,102,0.1); }
+.lead-popup-channels .lead-tg { color: #0088cc; border: 1px solid rgba(0,136,204,0.3); }
+.lead-popup-channels .lead-tg:hover { background: rgba(0,136,204,0.1); }
+.lead-popup-helper {
+  color: var(--accent3);
+  font-size: 0.85rem;
+  margin-top: 1rem;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.lead-popup-helper.visible { opacity: 1; }
+.lead-popup-success {
+  display: none;
+  text-align: center;
+  padding: 2rem 0;
+}
+.lead-popup-success.show { display: block; }
+.lead-popup-success .success-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.lead-popup-success h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--accent3);
+}
+.lead-popup-success p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* ===========================
+   Protocol Grid (Peptide Pages)
+   =========================== */
+.protocol-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+.protocol-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  text-align: right;
+}
+.protocol-card-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+.protocol-card-value {
+  font-size: 1.05rem;
+  font-weight: 700;
 }

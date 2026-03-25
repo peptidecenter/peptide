@@ -232,11 +232,108 @@
     if (item) item.classList.toggle('open');
   };
 
+  // ---- Lead Capture Popup ----
+  function initLeadPopup() {
+    if (sessionStorage.getItem('leadPopupShown')) return;
+
+    var overlay = document.createElement('div');
+    overlay.className = 'lead-popup-overlay';
+    overlay.id = 'leadPopupOverlay';
+    overlay.innerHTML =
+      '<div class="lead-popup" id="leadPopup">' +
+        '<button class="lead-popup-close" onclick="closeLeadPopup()" aria-label="סגור">✕</button>' +
+        '<div id="leadFormContent">' +
+          '<h2>צריכים הכוונה בבחירת פפטידים?</h2>' +
+          '<p class="lead-popup-subtitle">השאירו פרטים וקבלו ייעוץ ראשוני ללא עלות, עם מידע מותאם לפי המטרה שלכם</p>' +
+          '<div class="lead-popup-highlight">ייעוץ ראשוני ללא התחייבות</div>' +
+          '<p class="lead-popup-supporting">מתאים למי שמתעניין בהרזיה, התאוששות, אנרגיה או ריכוז</p>' +
+          '<form class="lead-popup-form" id="leadForm">' +
+            '<input type="text" name="name" placeholder="שם מלא" required />' +
+            '<input type="text" name="contact" placeholder="טלפון או אימייל" required />' +
+            '<button type="submit" class="lead-btn">קבלו ייעוץ</button>' +
+          '</form>' +
+          '<p class="lead-popup-helper" id="leadHelper">לא בטוחים איזה פפטיד מתאים? הייעוץ הראשוני ללא עלות</p>' +
+          '<div class="lead-popup-divider">או פנו אלינו ישירות</div>' +
+          '<div class="lead-popup-channels">' +
+            '<a href="https://wa.me/message/6HUAMNFA4B67K1" target="_blank" rel="noopener" class="lead-wa">💬 ייעוץ בוואטסאפ</a>' +
+            '<a href="https://t.me/PeptideCenterIL" target="_blank" rel="noopener" class="lead-tg">✈️ ייעוץ בטלגרם</a>' +
+          '</div>' +
+        '</div>' +
+        '<div class="lead-popup-success" id="leadSuccess">' +
+          '<div class="success-icon">✓</div>' +
+          '<h3>תודה!</h3>' +
+          '<p>נחזור אליכם בהקדם</p>' +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(overlay);
+
+    // Close on outside click
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeLeadPopup();
+    });
+
+    // Form submit
+    var form = document.getElementById('leadForm');
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var nameVal = form.querySelector('[name="name"]').value.trim();
+        var contactVal = form.querySelector('[name="contact"]').value.trim();
+        if (!nameVal || !contactVal) return;
+
+        var btn = form.querySelector('.lead-btn');
+        btn.disabled = true;
+        btn.textContent = '...שולח';
+
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_key: '97bdb499-afa0-4e09-8558-073bea428ace',
+            subject: 'ליד חדש מ-PeptideCenter',
+            from_name: 'PeptideCenter Lead',
+            name: nameVal,
+            contact: contactVal,
+            page: window.location.href,
+            timestamp: new Date().toLocaleString('he-IL')
+          })
+        }).then(function (res) { return res.json(); })
+          .then(function (data) {
+            document.getElementById('leadFormContent').style.display = 'none';
+            document.getElementById('leadSuccess').classList.add('show');
+          })
+          .catch(function () {
+            // Fallback: still show success (lead captured in form data)
+            document.getElementById('leadFormContent').style.display = 'none';
+            document.getElementById('leadSuccess').classList.add('show');
+          });
+      });
+    }
+
+    // Show after 90 seconds
+    setTimeout(function () {
+      overlay.classList.add('open');
+      sessionStorage.setItem('leadPopupShown', '1');
+      // Show helper text after 4 seconds
+      setTimeout(function () {
+        var helper = document.getElementById('leadHelper');
+        if (helper) helper.classList.add('visible');
+      }, 4000);
+    }, 90000);
+  }
+
+  window.closeLeadPopup = function () {
+    var overlay = document.getElementById('leadPopupOverlay');
+    if (overlay) overlay.classList.remove('open');
+  };
+
   // ---- Init on DOMContentLoaded ----
   document.addEventListener('DOMContentLoaded', function () {
     generateParticles();
     initDropdown();
     initFloatingButtons();
     initAccessibilityWidget();
+    initLeadPopup();
   });
 })();

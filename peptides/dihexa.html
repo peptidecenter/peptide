@@ -68,23 +68,22 @@ const PEPTIDE_ID = 'dihexa';
 const p = peptides.find(x => x.id === PEPTIDE_ID);
 
 if (p) {
-  document.title = `${p.name} — PeptideCenter`;
+  document.title = `${p.name} – מדריך מלא | PeptideCenter`;
 
   // Parse dosage lines for quick stats
   const dosageLines = p.dosage.split('\n');
-  const quickStats = [];
-  dosageLines.forEach(line => {
-    if (line.includes('מינון')) quickStats.push({ label: 'מינון', value: line.replace(/מינון[^:]*:\s*/, ''), icon: '💉' });
-    else if (line.includes('מסלול')) quickStats.push({ label: 'מסלול', value: line.replace(/מסלול[^:]*:\s*/, ''), icon: '🎯' });
-    else if (line.includes('אורך') || line.includes('תדירות')) quickStats.push({ label: line.includes('אורך') ? 'אורך טיפול' : 'תדירות', value: line.replace(/^[^:]+:\s*/, ''), icon: line.includes('אורך') ? '📅' : '🔄' });
-  });
-  // Ensure at least 4 stats
-  if (quickStats.length < 4) {
-    quickStats.push({ label: 'סטטוס', value: p.badgeText, icon: '📋' });
-  }
-  while (quickStats.length < 4) {
-    quickStats.push({ label: '—', value: '—', icon: '📊' });
-  }
+  const parseDosage = (key) => {
+    const line = dosageLines.find(l => l.includes(key));
+    return line ? line.replace(/^[^:]+:\s*/, '').trim() : '—';
+  };
+  const quickStats = [
+    { label: 'מינון', value: parseDosage('מינון'), icon: '💉' },
+    { label: 'מסלול', value: parseDosage('מסלול'), icon: '🎯' },
+    { label: 'תדירות', value: parseDosage('תדירות'), icon: '🔄' },
+    { label: 'אורך טיפול', value: parseDosage('אורך'), icon: '📅' }
+  ];
+  if (quickStats[2].value === '—') quickStats[2] = { label: 'סטטוס', value: p.badgeText, icon: '📋' };
+  if (quickStats[3].value === '—') quickStats[3] = { label: 'סטטוס', value: p.badgeText, icon: '📋' };
 
   // Render Hero
   document.getElementById('peptideHero').innerHTML = `
@@ -99,7 +98,7 @@ if (p) {
       ${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}
     </div>
     <div class="quick-stats">
-      ${quickStats.slice(0, 4).map(s => `
+      ${quickStats.map(s => `
         <div class="quick-stat-card">
           <div class="quick-stat-label">${s.icon} ${s.label}</div>
           <div class="quick-stat-value">${s.value}</div>
@@ -108,47 +107,88 @@ if (p) {
     </div>
   `;
 
+  // Build use cases list
+  const cases = p.useCases || p.benefits;
+
   // Render Detail Layout
   document.getElementById('detailLayout').innerHTML = `
     <div class="detail-main">
-      <!-- Overview -->
+      <!-- מה זה -->
       <div class="info-card">
         <div class="info-card-title">
           <div class="icon">📋</div>
-          סקירה כללית
+          מה זה ${p.name}?
         </div>
-        <p>${p.summary}</p>
+        <p>${p.whatIsIt || p.summary}</p>
       </div>
 
-      <!-- Benefits -->
+      <!-- איך עובד -->
+      <div class="info-card">
+        <div class="info-card-title">
+          <div class="icon" style="background:rgba(0,198,255,0.1);">🔬</div>
+          איך הוא עובד בגוף
+        </div>
+        <p>${p.mechanism || p.summary}</p>
+      </div>
+
+      <!-- למה משתמשים -->
       <div class="info-card">
         <div class="info-card-title">
           <div class="icon" style="background:rgba(0,255,170,0.1);">✅</div>
-          יתרונות עיקריים
+          למה משתמשים ב-${p.name}?
         </div>
         <ul class="benefits-list">
-          ${p.benefits.map(b => `<li><span class="check">✓</span> ${b}</li>`).join('')}
+          ${cases.map(b => '<li><span class="check">✓</span> ' + b + '</li>').join('')}
         </ul>
       </div>
 
-      <!-- Side Effects -->
+      <!-- Protocol Grid: מינון / תדירות / אורך / מסלול -->
+      <div class="info-card">
+        <div class="info-card-title">
+          <div class="icon" style="background:rgba(123,94,167,0.1);">💉</div>
+          פרוטוקול שימוש
+        </div>
+        <div class="protocol-grid">
+          <div class="protocol-card">
+            <div class="protocol-card-label">מינון</div>
+            <div class="protocol-card-value">${parseDosage('מינון')}</div>
+          </div>
+          <div class="protocol-card">
+            <div class="protocol-card-label">תדירות</div>
+            <div class="protocol-card-value">${parseDosage('תדירות') !== '—' ? parseDosage('תדירות') : 'ראו מדריך'}</div>
+          </div>
+          <div class="protocol-card">
+            <div class="protocol-card-label">אורך הטיפול</div>
+            <div class="protocol-card-value">${parseDosage('אורך') !== '—' ? parseDosage('אורך') : 'ראו מדריך'}</div>
+          </div>
+          <div class="protocol-card">
+            <div class="protocol-card-label">מסלול מתן</div>
+            <div class="protocol-card-value">${parseDosage('מסלול') !== '—' ? parseDosage('מסלול') : 'הזרקה תת עורית'}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- תופעות לוואי -->
       <div class="info-card">
         <div class="info-card-title">
           <div class="icon" style="background:rgba(255,217,61,0.1);">⚠️</div>
           תופעות לוואי אפשריות
         </div>
         <ul class="side-effects-list">
-          ${p.sideEffects.map(s => `<li><span class="warn-icon">⚠</span> ${s}</li>`).join('')}
+          ${p.sideEffects.map(s => '<li><span class="warn-icon">⚠</span> ' + s + '</li>').join('')}
         </ul>
       </div>
 
-      <!-- Dosage -->
+      <!-- למי מתאים -->
+      ${p.suitableFor ? '<div class="info-card"><div class="info-card-title"><div class="icon" style="background:rgba(0,198,255,0.1);">👤</div>למי זה עשוי להתאים</div><p>' + p.suitableFor + '</p></div>' : ''}
+
+      <!-- סיכום -->
       <div class="info-card">
         <div class="info-card-title">
-          <div class="icon" style="background:rgba(0,198,255,0.1);">💉</div>
-          מינון ופרוטוקול
+          <div class="icon" style="background:rgba(0,255,170,0.1);">📝</div>
+          סיכום
         </div>
-        <div class="dosage-box">${p.dosage.replace(/\n/g, '<br>')}</div>
+        <p>${p.summaryText || p.summary}</p>
       </div>
 
       <!-- Disclaimer -->
@@ -165,18 +205,9 @@ if (p) {
         ${dosageLines.map(line => {
           const parts = line.split(':');
           if (parts.length >= 2) {
-            return `<div class="quick-guide-item">
-              <div class="quick-guide-icon">→</div>
-              <div>
-                <div class="quick-guide-label">${parts[0].replace(/[⚠️]/g, '').trim()}</div>
-                <div class="quick-guide-value">${parts.slice(1).join(':').trim()}</div>
-              </div>
-            </div>`;
+            return '<div class="quick-guide-item"><div class="quick-guide-icon">→</div><div><div class="quick-guide-label">' + parts[0].replace(/[⚠️]/g, '').trim() + '</div><div class="quick-guide-value">' + parts.slice(1).join(':').trim() + '</div></div></div>';
           }
-          return `<div class="quick-guide-item">
-            <div class="quick-guide-icon">→</div>
-            <div><div class="quick-guide-value">${line}</div></div>
-          </div>`;
+          return '<div class="quick-guide-item"><div class="quick-guide-icon">→</div><div><div class="quick-guide-value">' + line + '</div></div></div>';
         }).join('')}
       </div>
 
@@ -184,7 +215,7 @@ if (p) {
       <div class="info-card" style="text-align:center;">
         <h3 style="margin-bottom:1rem;font-size:1.1rem;">צריך ייעוץ על ${p.name}?</h3>
         <div style="display:flex;flex-direction:column;gap:0.8rem;">
-          <a href="https://wa.me/972503637161?text=שלום%2C%20אני%20מעוניין%20בייעוץ%20על%20${encodeURIComponent(p.name)}" target="_blank" class="btn btn-whatsapp" style="justify-content:center;border-radius:10px;font-size:1rem;">💬 ייעוץ בוואטסאפ</a>
+          <a href="https://wa.me/message/6HUAMNFA4B67K1" target="_blank" class="btn btn-whatsapp" style="justify-content:center;border-radius:10px;font-size:1rem;">💬 ייעוץ בוואטסאפ</a>
           <a href="https://t.me/PeptideCenterIL" target="_blank" class="btn btn-telegram" style="justify-content:center;border-radius:10px;font-size:1rem;">✈️ ייעוץ בטלגרם</a>
         </div>
       </div>
