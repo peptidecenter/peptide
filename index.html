@@ -540,7 +540,16 @@
       .find-peptide-inner h2 { font-size: 1.4rem; }
       .promo-inner { padding: 2.5rem 1.5rem; }
       .promo-inner h2 { font-size: 1.6rem; }
+      .early-cta { padding: 1.5rem 1rem; }
     }
+
+    /* Hero trust line */
+    .hero-trust { color: var(--accent3); font-size: 0.95rem; margin-top: 1.2rem; opacity: 0.85; animation: fade-in 0.8s 0.8s ease both; }
+
+    /* Early Order CTA */
+    .early-cta { text-align: center; padding: 2.5rem 2rem; position: relative; z-index: 1; }
+    .early-cta p { font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; }
+    .early-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
   </style>
 </head>
 <body>
@@ -578,9 +587,10 @@
   <h1>פפטידים – העתיד של<br/>התאוששות, אנרגיה ו<span class="highlight">ביצועים</span></h1>
   <p>מידע, מדריכים והתאמה אישית לפי המטרה שלך</p>
   <div class="hero-btns">
-    <a href="#about" class="btn btn-primary">🔬 גלה איך פפטידים עובדים</a>
-    <a href="https://wa.me/972503637161?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9E%D7%99%D7%93%D7%A2%20%D7%A2%D7%9C%20%D7%A4%D7%A4%D7%98%D7%99%D7%93%D7%99%D7%9D%3F" target="_blank" class="btn btn-whatsapp">💬 קבל ייעוץ ראשוני</a>
+    <a href="order/index.html" class="btn btn-primary btn-lg">🛒 הזמן עכשיו</a>
+    <a href="#goals" class="btn btn-outline">🎯 בחר לפי מטרה</a>
   </div>
+  <p class="hero-trust">✓ רוב הלקוחות בוחרים 3 ויאלים כדי לקבל את המבצע</p>
 </div>
 
 <!-- Stats -->
@@ -590,40 +600,11 @@
   <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">ייעוץ זמין</div></div>
 </div>
 
-<!-- Section 2: What Are Peptides -->
-<section class="about-section" id="about">
-  <div class="section-title">
-    <h2>איך פפטידים עובדים בגוף</h2>
-  </div>
-  <p class="about-text">
-    פפטידים הם שרשראות קצרות של חומצות אמינו — אבני הבניין של חלבונים בגוף.
-    הם פועלים כמו אותות ביולוגיים שמנחים תהליכים כמו ריפוי רקמות, חילוף חומרים, שינה ותפקוד המוח.
-    בניגוד לתרופות סינתטיות, פפטידים מחקים מנגנונים טבעיים הקיימים בגוף ולכן בדרך כלל נסבלים היטב.
-  </p>
-  <div class="about-grid">
-    <div class="about-point">
-      <span class="about-point-icon">🧬</span>
-      <h3>שרשראות חומצות אמינו טבעיות</h3>
-      <p>מולקולות קטנות שהגוף מזהה ומשתמש בהן כחלק מתהליכים ביולוגיים קיימים</p>
-    </div>
-    <div class="about-point">
-      <span class="about-point-icon">⚡</span>
-      <h3>מנגנוני פעולה ביולוגיים ממוקדים</h3>
-      <p>כל פפטיד פועל על מסלול ספציפי בגוף — ריפוי, מטבוליזם, קוגניציה ועוד</p>
-    </div>
-    <div class="about-point">
-      <span class="about-point-icon">🛡️</span>
-      <h3>פרופיל בטיחות חיובי במחקרים</h3>
-      <p>מחקרים מראים שפפטידים רבים נסבלים היטב עם מעט תופעות לוואי</p>
-    </div>
-  </div>
-</section>
-
-<!-- Section 3: Goal Selection -->
+<!-- Section 2: Goal Selection -->
 <section id="goals">
   <div class="section-title">
-    <h2>בחר מטרה – וגלה פפטידים רלוונטיים</h2>
-    <p>בחרו את המטרה שלכם ומצאו את הפפטידים המתאימים</p>
+    <h2>מה המטרה שלך?</h2>
+    <p>בחרו מטרה וגלו פפטידים רלוונטיים</p>
   </div>
   <div class="home-goals-grid">
     <div class="home-goal-card" data-goal="weight" onclick="showGoalContent('weight')">
@@ -655,7 +636,58 @@
   <div class="goal-content-panel" id="goalContentPanel"></div>
 </section>
 
-<!-- Section 4: Popular Peptides -->
+<!-- Section 3: Promo -->
+<section class="promo-section">
+  <div class="promo-inner">
+    <div class="promo-badge">🔥 מבצע מיוחד</div>
+    <h2>3 ויאלים ב-1,000 ₪</h2>
+    <p class="promo-subtitle">+ ערכת שימוש במתנה</p>
+    <p class="promo-details">המבצע כולל מים בקטריוסטטיים, מזרקי אינסולין, פדים אלכוהוליים ומזרקי שאיבה</p>
+    <div class="promo-btns">
+      <a href="order/index.html" class="btn btn-primary btn-lg">🛒 לעמוד ההזמנה</a>
+      <a href="https://wa.me/972503637161" target="_blank" class="btn btn-whatsapp">💬 ייעוץ בוואטסאפ</a>
+    </div>
+  </div>
+</section>
+
+<!-- Early Order CTA -->
+<div class="early-cta">
+  <p>מעוניינים להזמין כבר עכשיו?</p>
+  <div class="early-cta-btns">
+    <a href="order/index.html" class="btn btn-primary">🛒 לעמוד ההזמנה</a>
+    <a href="https://wa.me/972503637161" target="_blank" class="btn btn-whatsapp">💬 ייעוץ בוואטסאפ</a>
+  </div>
+</div>
+
+<!-- Section 5: What Are Peptides -->
+<section class="about-section" id="about">
+  <div class="section-title">
+    <h2>איך פפטידים עובדים בגוף</h2>
+  </div>
+  <p class="about-text">
+    פפטידים הם שרשראות קצרות של חומצות אמינו שפועלות כאותות ביולוגיים בגוף.
+    הם מנחים תהליכים כמו ריפוי רקמות, חילוף חומרים ותפקוד המוח — ונסבלים היטב במחקרים.
+  </p>
+  <div class="about-grid">
+    <div class="about-point">
+      <span class="about-point-icon">🧬</span>
+      <h3>מולקולות טבעיות</h3>
+      <p>הגוף מזהה ומשתמש בהן כחלק מתהליכים ביולוגיים קיימים</p>
+    </div>
+    <div class="about-point">
+      <span class="about-point-icon">⚡</span>
+      <h3>פעולה ממוקדת</h3>
+      <p>כל פפטיד פועל על מסלול ספציפי — ריפוי, מטבוליזם, קוגניציה</p>
+    </div>
+    <div class="about-point">
+      <span class="about-point-icon">🛡️</span>
+      <h3>בטיחות מחקרית</h3>
+      <p>פרופיל בטיחות חיובי עם מעט תופעות לוואי</p>
+    </div>
+  </div>
+</section>
+
+<!-- Section 6: Popular Peptides -->
 <section id="peptides">
   <div class="section-title">
     <h2>הפפטידים הנפוצים ביותר</h2>
@@ -692,20 +724,6 @@
       <span class="why-us-icon">💬</span>
       <h3>ייעוץ ראשוני ללא עלות</h3>
       <p>צוות מומחים זמין לשאלות</p>
-    </div>
-  </div>
-</section>
-
-<!-- Section 6: Promo -->
-<section class="promo-section">
-  <div class="promo-inner">
-    <div class="promo-badge">🔥 מבצע מיוחד</div>
-    <h2>3 ויאלים ב-1,000 ₪</h2>
-    <p class="promo-subtitle">+ ערכת שימוש במתנה</p>
-    <p class="promo-details">המבצע כולל מים בקטריוסטטיים, מזרקי אינסולין, פדים אלכוהוליים ומזרקי שאיבה</p>
-    <div class="promo-btns">
-      <a href="order/index.html" class="btn btn-primary btn-lg">🛒 לעמוד ההזמנה</a>
-      <a href="https://wa.me/972503637161" target="_blank" class="btn btn-whatsapp">💬 ייעוץ בוואטסאפ</a>
     </div>
   </div>
 </section>
