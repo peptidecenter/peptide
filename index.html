@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="css/styles.css?v=5" />
   <style>
     /* Homepage-specific styles */
+
+    /* Goals grid */
     .home-goals-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -26,6 +28,7 @@
       transition: all 0.3s;
       position: relative;
       overflow: hidden;
+      cursor: pointer;
     }
     .home-goal-card::before {
       content: '';
@@ -41,6 +44,12 @@
       box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     }
     .home-goal-card:hover::before { opacity: 1; }
+    .home-goal-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 25px rgba(0,198,255,0.15);
+      transform: translateY(-4px);
+    }
+    .home-goal-card.active::before { opacity: 1; }
     .home-goal-icon {
       font-size: 2.2rem;
       margin-bottom: 0.8rem;
@@ -56,111 +65,7 @@
       line-height: 1.6;
     }
 
-    .popular-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.2rem;
-    }
-    .popular-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.5rem;
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.3s;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-    .popular-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(0,198,255,0.35);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-    }
-    .popular-card-head {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-    .popular-card-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      flex-shrink: 0;
-    }
-    .popular-card h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-    .popular-card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-    .popular-card-link {
-      color: var(--accent);
-      font-size: 0.9rem;
-      font-weight: 500;
-      margin-top: auto;
-    }
-
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.2rem;
-    }
-    .tool-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem 1.5rem;
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.3s;
-      text-align: center;
-    }
-    .tool-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(0,255,170,0.3);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    }
-    .tool-icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-    .tool-card h3 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    .tool-card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    @media (max-width: 900px) {
-      .home-goals-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      .tools-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    /* Interactive goal content panel */
-    .home-goal-card { cursor: pointer; }
-    .home-goal-card.active {
-      border-color: var(--accent);
-      box-shadow: 0 0 25px rgba(0,198,255,0.15);
-      transform: translateY(-4px);
-    }
-    .home-goal-card.active::before { opacity: 1; }
+    /* Goal content panel */
     .goal-content-panel {
       max-height: 0;
       overflow: hidden;
@@ -214,11 +119,102 @@
     }
     .goal-more-link:hover { color: var(--accent); }
 
-    /* Find Your Peptide CTA section */
+    /* Popular grid */
+    .popular-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+    .popular-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .popular-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0,198,255,0.35);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+    .popular-card-head {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .popular-card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .popular-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .popular-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .popular-card-link {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-top: auto;
+    }
+
+    /* Tools grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+    }
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s;
+      text-align: center;
+    }
+    .tool-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0,255,170,0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .tool-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .tool-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .tool-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Find peptide CTA */
     .find-peptide-section {
       position: relative;
       z-index: 1;
-      padding: 4rem 2rem;
+      padding: 6rem 2rem;
       max-width: 900px;
       margin: 0 auto;
     }
@@ -263,6 +259,267 @@
       flex-wrap: wrap;
     }
 
+    /* About section */
+    .about-section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .about-text {
+      max-width: 800px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .about-point {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .about-point:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0,198,255,0.25);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+    .about-point-icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .about-point h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .about-point p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Why Us */
+    .why-us-section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .why-us-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .why-us-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .why-us-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0,255,170,0.25);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+    .why-us-icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .why-us-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .why-us-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Promo */
+    .promo-section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .promo-inner {
+      background: linear-gradient(135deg, rgba(0,198,255,0.08), rgba(123,94,167,0.08));
+      border: 1px solid rgba(0,198,255,0.25);
+      border-radius: 24px;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .promo-inner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0,198,255,0.08), transparent 70%);
+      pointer-events: none;
+    }
+    .promo-badge {
+      display: inline-block;
+      background: rgba(255,107,107,0.15);
+      border: 1px solid rgba(255,107,107,0.3);
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ff6b6b;
+      margin-bottom: 1.5rem;
+    }
+    .promo-inner h2 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+    .promo-subtitle {
+      font-size: 1.2rem;
+      color: var(--accent3);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .promo-details {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .promo-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* FAQ */
+    .faq-section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .faq-item:hover {
+      border-color: rgba(0,198,255,0.2);
+    }
+    .faq-q {
+      padding: 1.2rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 1.05rem;
+      user-select: none;
+      transition: color 0.2s;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-q .faq-arrow {
+      transition: transform 0.3s;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .faq-item.open .faq-arrow {
+      transform: rotate(180deg);
+    }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      padding: 0 1.5rem;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+    .faq-item.open .faq-a {
+      max-height: 200px;
+      padding: 0 1.5rem 1.2rem;
+    }
+
+    /* Final CTA */
+    .final-cta-section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .final-cta-section h2 {
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 0.8rem;
+    }
+    .final-cta-section > p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    .final-cta-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Section spacing override */
+    section {
+      padding: 6rem 2rem;
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .home-goals-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .why-us-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .about-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
     @media (max-width: 600px) {
       .home-goals-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -270,11 +527,19 @@
       .tools-grid {
         grid-template-columns: 1fr;
       }
+      .why-us-grid {
+        grid-template-columns: 1fr;
+      }
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
       .goal-peptides-grid {
         grid-template-columns: 1fr;
       }
       .find-peptide-inner { padding: 2.5rem 1.5rem; }
       .find-peptide-inner h2 { font-size: 1.4rem; }
+      .promo-inner { padding: 2.5rem 1.5rem; }
+      .promo-inner h2 { font-size: 1.6rem; }
     }
   </style>
 </head>
@@ -309,30 +574,55 @@
 
 <!-- Section 1: Hero -->
 <div class="hero">
-  <h1>
-    המדריך המקיף<br/>ל<span class="highlight">פפטידים</span>
-  </h1>
-  <p>
-    מאגר מידע מדעי מקיף על פפטידים מובילים — מנגנון פעולה, מינונים מדויקים, יתרונות מוכחים ותופעות לוואי.
-    הכל במקום אחד, בעברית.
-  </p>
+  <div class="hero-badge">PeptideCenter</div>
+  <h1>פפטידים – העתיד של<br/>התאוששות, אנרגיה ו<span class="highlight">ביצועים</span></h1>
+  <p>מידע, מדריכים והתאמה אישית לפי המטרה שלך</p>
   <div class="hero-btns">
-    <a href="guide/index.html" class="btn btn-primary">📖 לקריאת המדריך</a>
-    <a href="https://wa.me/972503637161?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9E%D7%99%D7%93%D7%A2%20%D7%A2%D7%9C%20%D7%A4%D7%A4%D7%98%D7%99%D7%93%D7%99%D7%9D%3F" target="_blank" class="btn btn-whatsapp">💬 צור קשר לייעוץ</a>
+    <a href="#about" class="btn btn-primary">🔬 גלה איך פפטידים עובדים</a>
+    <a href="https://wa.me/972503637161?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9E%D7%99%D7%93%D7%A2%20%D7%A2%D7%9C%20%D7%A4%D7%A4%D7%98%D7%99%D7%93%D7%99%D7%9D%3F" target="_blank" class="btn btn-whatsapp">💬 קבל ייעוץ ראשוני</a>
   </div>
 </div>
 
 <!-- Stats -->
 <div class="stats-bar">
-  <div class="stat"><div class="stat-num">20+</div><div class="stat-label">פפטידים מתועדים</div></div>
+  <div class="stat"><div class="stat-num">32+</div><div class="stat-label">פפטידים מתועדים</div></div>
   <div class="stat"><div class="stat-num">100%</div><div class="stat-label">מידע מבוסס מחקר</div></div>
   <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">ייעוץ זמין</div></div>
 </div>
 
-<!-- Section 2: Goals Grid -->
+<!-- Section 2: What Are Peptides -->
+<section class="about-section" id="about">
+  <div class="section-title">
+    <h2>איך פפטידים עובדים בגוף</h2>
+  </div>
+  <p class="about-text">
+    פפטידים הם שרשראות קצרות של חומצות אמינו — אבני הבניין של חלבונים בגוף.
+    הם פועלים כמו אותות ביולוגיים שמנחים תהליכים כמו ריפוי רקמות, חילוף חומרים, שינה ותפקוד המוח.
+    בניגוד לתרופות סינתטיות, פפטידים מחקים מנגנונים טבעיים הקיימים בגוף ולכן בדרך כלל נסבלים היטב.
+  </p>
+  <div class="about-grid">
+    <div class="about-point">
+      <span class="about-point-icon">🧬</span>
+      <h3>שרשראות חומצות אמינו טבעיות</h3>
+      <p>מולקולות קטנות שהגוף מזהה ומשתמש בהן כחלק מתהליכים ביולוגיים קיימים</p>
+    </div>
+    <div class="about-point">
+      <span class="about-point-icon">⚡</span>
+      <h3>מנגנוני פעולה ביולוגיים ממוקדים</h3>
+      <p>כל פפטיד פועל על מסלול ספציפי בגוף — ריפוי, מטבוליזם, קוגניציה ועוד</p>
+    </div>
+    <div class="about-point">
+      <span class="about-point-icon">🛡️</span>
+      <h3>פרופיל בטיחות חיובי במחקרים</h3>
+      <p>מחקרים מראים שפפטידים רבים נסבלים היטב עם מעט תופעות לוואי</p>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3: Goal Selection -->
 <section id="goals">
   <div class="section-title">
-    <h2>במה פפטידים יכולים לעזור?</h2>
+    <h2>בחר מטרה – וגלה פפטידים רלוונטיים</h2>
     <p>בחרו את המטרה שלכם ומצאו את הפפטידים המתאימים</p>
   </div>
   <div class="home-goals-grid">
@@ -365,22 +655,65 @@
   <div class="goal-content-panel" id="goalContentPanel"></div>
 </section>
 
-<!-- Section 3: Popular Peptides -->
+<!-- Section 4: Popular Peptides -->
 <section id="peptides">
   <div class="section-title">
-    <h2>פפטידים נפוצים</h2>
+    <h2>הפפטידים הנפוצים ביותר</h2>
     <p>הפפטידים הנחקרים והמבוקשים ביותר</p>
   </div>
   <div class="popular-grid" id="popularGrid"></div>
   <div style="text-align:center;margin-top:2rem;">
-    <a href="wiki/index.html" class="btn btn-outline">📋 לכל 20+ הפפטידים במאגר</a>
+    <a href="wiki/index.html" class="btn btn-outline">📋 לכל 32+ הפפטידים במאגר</a>
   </div>
 </section>
 
-<!-- Section 4: Tools -->
+<!-- Section 5: Why Us -->
+<section class="why-us-section">
+  <div class="section-title">
+    <h2>למה PeptideCenter</h2>
+  </div>
+  <div class="why-us-grid">
+    <div class="why-us-card">
+      <span class="why-us-icon">🔬</span>
+      <h3>מידע מבוסס מחקר</h3>
+      <p>כל התכנים מבוססים על ספרות מדעית עדכנית</p>
+    </div>
+    <div class="why-us-card">
+      <span class="why-us-icon">📖</span>
+      <h3>מדריכים בעברית</h3>
+      <p>מידע מקצועי ונגיש בשפה שלכם</p>
+    </div>
+    <div class="why-us-card">
+      <span class="why-us-icon">🎯</span>
+      <h3>התאמה לפי מטרה</h3>
+      <p>כלים חכמים למציאת הפפטיד המתאים</p>
+    </div>
+    <div class="why-us-card">
+      <span class="why-us-icon">💬</span>
+      <h3>ייעוץ ראשוני ללא עלות</h3>
+      <p>צוות מומחים זמין לשאלות</p>
+    </div>
+  </div>
+</section>
+
+<!-- Section 6: Promo -->
+<section class="promo-section">
+  <div class="promo-inner">
+    <div class="promo-badge">🔥 מבצע מיוחד</div>
+    <h2>3 ויאלים ב-1,000 ₪</h2>
+    <p class="promo-subtitle">+ ערכת שימוש במתנה</p>
+    <p class="promo-details">המבצע כולל מים בקטריוסטטיים, מזרקי אינסולין, פדים אלכוהוליים ומזרקי שאיבה</p>
+    <div class="promo-btns">
+      <a href="order/index.html" class="btn btn-primary btn-lg">🛒 לעמוד ההזמנה</a>
+      <a href="https://wa.me/972503637161" target="_blank" class="btn btn-whatsapp">💬 ייעוץ בוואטסאפ</a>
+    </div>
+  </div>
+</section>
+
+<!-- Section 7: Tools -->
 <section id="tools">
   <div class="section-title">
-    <h2>כלים ומדריכים שימושיים</h2>
+    <h2>מידע וכלים משלימים</h2>
     <p>כל מה שצריך כדי להשתמש בפפטידים בצורה בטוחה</p>
   </div>
   <div class="tools-grid">
@@ -407,10 +740,10 @@
   </div>
 </section>
 
-<!-- Section 5: Find Your Peptide CTA -->
+<!-- Section 8: Find Your Peptide -->
 <section class="find-peptide-section">
   <div class="find-peptide-inner">
-    <h2>לא בטוחים איזה פפטיד מתאים לכם?</h2>
+    <h2>לא בטוחים מה מתאים לכם?</h2>
     <p>השתמשו בכלי ההתאמה החכם כדי לגלות אילו פפטידים קשורים למטרה שלכם — תוך דקה.</p>
     <div class="find-peptide-buttons">
       <a href="quiz/index.html" class="btn btn-primary btn-lg">🔍 מצא את הפפטיד שלך</a>
@@ -419,29 +752,59 @@
   </div>
 </section>
 
-<!-- Section 6: Contact -->
-<section id="contact" style="padding-top: 2rem;">
-  <div class="contact-section">
-    <div>✨</div>
-    <h2>צריכים מידע נוסף?</h2>
-    <p>
-      צוות הייעוץ שלנו זמין לשאלות על פפטידים, פרוטוקולים ומינונים.
-      פנו אלינו בוואטסאפ או בטלגרם.
-    </p>
-    <div class="contact-btns">
-      <a href="https://wa.me/972503637161?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9E%D7%99%D7%93%D7%A2%20%D7%A2%D7%9C%20%D7%A4%D7%A4%D7%98%D7%99%D7%93%D7%99%D7%9D%3F" target="_blank" class="btn btn-whatsapp btn-lg">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-        ייעוץ בוואטסאפ
-      </a>
-      <a href="https://t.me/PeptideCenterIL" target="_blank" class="btn btn-telegram btn-lg">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-        ייעוץ בטלגרם
-      </a>
+<!-- Section 9: FAQ -->
+<section class="faq-section">
+  <div class="section-title">
+    <h2>שאלות נפוצות</h2>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>איך בוחרים פפטיד מתאים?</span>
+      <span class="faq-arrow">▼</span>
     </div>
+    <div class="faq-a">אפשר להשתמש בכלי ההתאמה שלנו, לעיין במדריכים לפי מטרה, או לפנות לצוות שלנו לייעוץ ראשוני ללא עלות.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>האם חייבים להתחיל עם 3 ויאלים?</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">לא, אפשר להזמין גם ויאל בודד. אבל מבצע 3 ב-1,000 ₪ כולל ערכת שימוש במתנה ומשתלם יותר.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>איך מתבצעת ההזמנה?</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">בוחרים מוצרים בעמוד ההזמנה, ממלאים שם וטלפון, ושולחים הזמנה ישירות לוואטסאפ. פשוט ומהיר.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>האם אפשר לקבל הכוונה ראשונית?</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">בהחלט. הייעוץ הראשוני ללא עלות. פנו אלינו בוואטסאפ או בטלגרם ונשמח לעזור.</div>
   </div>
 </section>
 
-<!-- Section 6: Disclaimer -->
+<!-- Section 10: Final CTA -->
+<section class="final-cta-section" id="contact">
+  <h2>מוכנים להתחיל?</h2>
+  <p>פנו אלינו או עברו ישירות לעמוד ההזמנה</p>
+  <div class="final-cta-btns">
+    <a href="https://wa.me/972503637161?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9E%D7%99%D7%93%D7%A2%20%D7%A2%D7%9C%20%D7%A4%D7%A4%D7%98%D7%99%D7%93%D7%99%D7%9D%3F" target="_blank" class="btn btn-whatsapp btn-lg">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      ייעוץ בוואטסאפ
+    </a>
+    <a href="https://t.me/PeptideCenterIL" target="_blank" class="btn btn-telegram btn-lg">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      ייעוץ בטלגרם
+    </a>
+    <a href="order/index.html" class="btn btn-primary btn-lg">🛒 לעמוד ההזמנה</a>
+  </div>
+</section>
+
+<!-- Disclaimer -->
 <div class="disclaimer">
   <div class="disclaimer-icon">⚠️</div>
   <p>
@@ -460,6 +823,7 @@
     <a href="accessibility/index.html">נגישות</a>
     <a href="quiz/index.html">מצא את הפפטיד שלך</a>
     <a href="injection/index.html">מדריך הזרקה</a>
+    <a href="order/index.html">הזמנת מוצרים</a>
   </div>
   <p>&copy; 2025 PeptideCenter &middot; כל הזכויות שמורות &middot; <a href="#contact">צור קשר</a></p>
   <p style="margin-top:0.5rem; font-size:0.75rem;">אתר זה מיועד למטרות מידע בלבד. אין לראות בתכנים תחליף לייעוץ רפואי מקצועי.</p>
@@ -468,7 +832,7 @@
 <script src="js/peptides-data.js"></script>
 <script>
 // ─── Popular Peptides (filtered subset) ───
-const popularIds = ['bpc157', 'tb500', 'nad', 'motsc', 'ghkcu', 'semax', 'selank', 'ss31', 'retatrutide'];
+const popularIds = ['bpc157', 'tb500', 'nad', 'motsc', 'ghkcu'];
 
 function renderPopular() {
   const grid = document.getElementById('popularGrid');
@@ -545,6 +909,7 @@ window.showGoalContent = function(goal) {
   });
   html += '</div>';
   html += '<div class="goal-cta">';
+  html += '<a href="order/index.html" class="btn btn-outline" style="margin-left:0.5rem;">🛒 בחר מוצר</a>';
   html += '<a href="quiz/index.html" class="btn btn-primary">🔍 מצא את הפפטיד המתאים לך</a>';
   html += '<br><a href="goals/index.html#' + goal + '" class="goal-more-link">לכל הפפטידים בקטגוריית ' + goalLabels[goal] + ' →</a>';
   html += '</div>';
@@ -556,6 +921,16 @@ window.showGoalContent = function(goal) {
   setTimeout(() => {
     panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 100);
+};
+
+// ─── FAQ Accordion ───
+window.toggleFaq = function(el) {
+  const item = el.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  // Toggle clicked
+  if (!wasOpen) item.classList.add('open');
 };
 </script>
 <script src="js/widgets.js?v=2"></script>
