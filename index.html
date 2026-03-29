@@ -319,7 +319,7 @@
     }
     .why-us-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
     }
     .why-us-card {
@@ -543,6 +543,16 @@
       .early-cta { padding: 1.5rem 1rem; }
     }
 
+    /* Popular card order button */
+    .popular-order-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #0099cc, #006699);
+      color: #fff; padding: 0.4rem 1rem; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 600; text-decoration: none;
+      transition: all 0.2s; text-align: center; margin-top: 0.5rem;
+    }
+    .popular-order-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,198,255,0.3); }
+
     /* Hero trust line */
     .hero-trust { color: var(--accent3); font-size: 0.95rem; margin-top: 1.2rem; opacity: 0.85; animation: fade-in 0.8s 0.8s ease both; }
 
@@ -584,8 +594,8 @@
 <!-- Section 1: Hero -->
 <div class="hero">
   <div class="hero-badge">PeptideCenter</div>
-  <h1>פפטידים – העתיד של<br/>התאוששות, אנרגיה ו<span class="highlight">ביצועים</span></h1>
-  <p>מידע, מדריכים והתאמה אישית לפי המטרה שלך</p>
+  <h1>בחר פפטידים לפי מטרה –<br/>והזמן <span class="highlight">בקלות</span></h1>
+  <p>התאוששות, אנרגיה, הרזיה וריכוז – הכל במקום אחד</p>
   <div class="hero-btns">
     <a href="order/index.html" class="btn btn-primary btn-lg">🛒 הזמן עכשיו</a>
     <a href="#goals" class="btn btn-outline">🎯 בחר לפי מטרה</a>
@@ -598,6 +608,15 @@
   <div class="stat"><div class="stat-num">32+</div><div class="stat-label">פפטידים מתועדים</div></div>
   <div class="stat"><div class="stat-num">100%</div><div class="stat-label">מידע מבוסס מחקר</div></div>
   <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">ייעוץ זמין</div></div>
+</div>
+
+<!-- Quick Order CTA -->
+<div class="early-cta">
+  <p>רוצים להזמין כבר עכשיו?</p>
+  <div class="early-cta-btns">
+    <a href="order/index.html" class="btn btn-primary">🛒 לעמוד ההזמנה</a>
+    <a href="https://wa.me/972503637161" target="_blank" class="btn btn-whatsapp">💬 ייעוץ בוואטסאפ</a>
+  </div>
 </div>
 
 <!-- Section 2: Goal Selection -->
@@ -634,6 +653,9 @@
     </div>
   </div>
   <div class="goal-content-panel" id="goalContentPanel"></div>
+  <div style="text-align:center;margin-top:1.5rem;">
+    <a href="order/index.html" class="btn btn-primary">🛒 המשך להזמנה</a>
+  </div>
 </section>
 
 <!-- Section 3: Promo -->
@@ -649,15 +671,6 @@
     </div>
   </div>
 </section>
-
-<!-- Early Order CTA -->
-<div class="early-cta">
-  <p>מעוניינים להזמין כבר עכשיו?</p>
-  <div class="early-cta-btns">
-    <a href="order/index.html" class="btn btn-primary">🛒 לעמוד ההזמנה</a>
-    <a href="https://wa.me/972503637161" target="_blank" class="btn btn-whatsapp">💬 ייעוץ בוואטסאפ</a>
-  </div>
-</div>
 
 <!-- Section 5: What Are Peptides -->
 <section class="about-section" id="about">
@@ -697,9 +710,12 @@
   <div style="text-align:center;margin-top:2rem;">
     <a href="wiki/index.html" class="btn btn-outline">📋 לכל 32+ הפפטידים במאגר</a>
   </div>
+  <div class="early-cta" style="margin-top:2rem;">
+    <a href="order/index.html" class="btn btn-primary btn-lg">🛒 לעמוד ההזמנה</a>
+  </div>
 </section>
 
-<!-- Section 5: Why Us -->
+<!-- Why Us -->
 <section class="why-us-section">
   <div class="section-title">
     <h2>למה PeptideCenter</h2>
@@ -709,11 +725,6 @@
       <span class="why-us-icon">🔬</span>
       <h3>מידע מבוסס מחקר</h3>
       <p>כל התכנים מבוססים על ספרות מדעית עדכנית</p>
-    </div>
-    <div class="why-us-card">
-      <span class="why-us-icon">📖</span>
-      <h3>מדריכים בעברית</h3>
-      <p>מידע מקצועי ונגיש בשפה שלכם</p>
     </div>
     <div class="why-us-card">
       <span class="why-us-icon">🎯</span>
@@ -865,7 +876,8 @@ function renderPopular() {
         <h3>${p.name}</h3>
       </div>
       <p>${p.summary.length > 100 ? p.summary.substring(0, 100) + '...' : p.summary}</p>
-      <div class="popular-card-link">למידע נוסף ←</div>
+      <div class="popular-card-link"><span>למידע נוסף ←</span></div>
+      <a href="order/index.html" class="popular-order-btn" onclick="event.stopPropagation()">בחר מוצר</a>
     `;
     grid.appendChild(card);
   });
