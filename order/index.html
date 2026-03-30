@@ -679,7 +679,8 @@
     { id: 'selank', name: 'Selank', dosage: '10mg', price: 400 },
     { id: 'ss31', name: 'SS-31', dosage: '10mg', price: 400 },
     { id: 'mt2', name: 'MT-2', dosage: '10mg', price: 400 },
-    { id: 'motsc', name: 'MOTS-C', dosage: '10mg', price: 400 }
+    { id: 'motsc', name: 'MOTS-C', dosage: '10mg', price: 400 },
+    { id: 'semax', name: 'Semax', dosage: '10mg', price: 400 }
   ];
 
   const cart = {}; // { id: qty }
@@ -875,6 +876,26 @@
     const url = 'https://wa.me/972503637161?text=' + encodeURIComponent(msg);
     window.open(url, '_blank');
   };
+
+  // ── Bundle URL auto-cart ──
+  const bundleDefs = {
+    recovery: ['bpc157', 'tb500', 'ghkcu'],
+    energy: ['nad', 'ss31', 'motsc'],
+    brain: ['semax', 'selank', 'nad'],
+    skin: ['ghkcu', 'bpc157', 'tb500']
+  };
+
+  (function checkBundle() {
+    const params = new URLSearchParams(window.location.search);
+    const bundle = params.get('bundle');
+    if (bundle && bundleDefs[bundle]) {
+      bundleDefs[bundle].forEach(id => { cart[id] = (cart[id] || 0) + 1; });
+      renderCart();
+      setTimeout(() => {
+        document.getElementById('cartSection').scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    }
+  })();
 
   // Update FAB on resize
   window.addEventListener('resize', renderCart);

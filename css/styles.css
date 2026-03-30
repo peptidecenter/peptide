@@ -67,7 +67,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2r
 /* Buttons */
 .btn { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.9rem 2rem; border-radius: 50px; font-family: 'Rubik', sans-serif; font-size: 1.3rem; font-weight: 700; cursor: pointer; text-decoration: none; transition: all 0.3s; border: none; }
 .btn-primary { background: linear-gradient(135deg, #0099cc, #006699); color: rgba(255,255,255,0.9); box-shadow: 0 0 15px rgba(0,198,255,0.15); }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(0,198,255,0.3); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(0,198,255,0.3), 0 0 50px rgba(0,198,255,0.1); }
 .btn-whatsapp { background: #1a9e4d; color: rgba(255,255,255,0.9); box-shadow: 0 0 15px rgba(37,211,102,0.15); }
 .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(37,211,102,0.3); }
 .btn-telegram { background: #006699; color: rgba(255,255,255,0.9); box-shadow: 0 0 15px rgba(0,136,204,0.15); }
@@ -1089,6 +1089,12 @@ body.a11y-readable-font, body.a11y-readable-font * { font-family: Arial, Helveti
 }
 .tips-list li:last-child { border-bottom: none; }
 .tips-list .tip-icon { color: var(--accent3); font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+/* ===========================
+   Scroll Reveal
+   =========================== */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ===========================
    Responsive
