@@ -249,7 +249,8 @@
           '<p class="lead-popup-supporting">מתאים למי שמתעניין בהרזיה, התאוששות, אנרגיה או ריכוז</p>' +
           '<form class="lead-popup-form" id="leadForm">' +
             '<input type="text" name="name" placeholder="שם מלא" required />' +
-            '<input type="text" name="contact" placeholder="טלפון או אימייל" required />' +
+            '<input type="email" name="email" placeholder="אימייל" required />' +
+            '<input type="tel" name="phone" placeholder="טלפון" pattern="[0-9]*" inputmode="numeric" required />' +
             '<button type="submit" class="lead-btn">קבלו ייעוץ</button>' +
           '</form>' +
           '<p class="lead-popup-helper" id="leadHelper">לא בטוחים איזה פפטיד מתאים? הייעוץ הראשוני ללא עלות</p>' +
@@ -279,8 +280,9 @@
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var nameVal = form.querySelector('[name="name"]').value.trim();
-        var contactVal = form.querySelector('[name="contact"]').value.trim();
-        if (!nameVal || !contactVal) return;
+        var emailVal = form.querySelector('[name="email"]').value.trim();
+        var phoneVal = form.querySelector('[name="phone"]').value.trim();
+        if (!nameVal || !emailVal || !phoneVal) return;
 
         var btn = form.querySelector('.lead-btn');
         btn.disabled = true;
@@ -294,7 +296,8 @@
             subject: 'ליד חדש מ-PeptideCenter',
             from_name: 'PeptideCenter Lead',
             name: nameVal,
-            contact: contactVal,
+            email: emailVal,
+            phone: phoneVal,
             page: window.location.href,
             timestamp: new Date().toLocaleString('he-IL')
           })
